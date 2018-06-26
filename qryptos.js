@@ -72,7 +72,7 @@ async function doOrders(lp, side, op, precision, price, qryptos, balance, callba
                 'internalStatus': side
             }, function(err, res) {
                 if (err) {
-					////console.log(err);
+					console.log(err);
 				}
                 ////console.log('res2')
                 ////console.log(res.result);
@@ -114,7 +114,7 @@ async function cancel(op, o, qryptos, callback) {
             },
            function(err, result) {
 			   if (err){
-				   ////console.log(err);
+				   console.log(err);
 			   }
                 ////console.log('res3');
                // ////console.log(result.result);
@@ -280,7 +280,7 @@ async function dodatthing(qryptos, lpairs, pairs, balances) {
 				
                 } catch (err) {
                     //console.log('138000');
-                    //console.log(err);
+                    console.log(err);
 		process.exit();
                 }
                     
@@ -302,7 +302,7 @@ async function dodatthing(qryptos, lpairs, pairs, balances) {
 
     } catch (err) {
         //console.log('138000');
-        //console.log(err);
+        console.log(err);
 		process.exit();
     }
 }
@@ -447,7 +447,7 @@ async function doxyz(qryptos) {
 
     } catch (err) {
         //console.log('138000');
-        //console.log(err);
+        console.log(err);
 		process.exit();
     }
 	}
@@ -535,7 +535,7 @@ function doOrders2(pairs, lp, p, qryptos, balances, orders2, total) {
                                     });
                                 }, 200);
                             } catch (err) {
-                                //console.log(err);
+                                console.log(err);
                             }
                                 });
                             }, Math.random() * mult * pairs.length * 2 * 40);
@@ -589,7 +589,7 @@ function doOrders2(pairs, lp, p, qryptos, balances, orders2, total) {
                                     });
                                 }, Math.random() *  200);
                             } catch (err) {
-                                //console.log(err);
+                                console.log(err);
                             }
                                 });
                             }, Math.random() * mult * pairs.length * 2 * 75);
@@ -628,7 +628,7 @@ function doOrders2(pairs, lp, p, qryptos, balances, orders2, total) {
                                     });
                                 }, Math.random() * mult * pairs.length * 2 * 10);
                             } catch (err) {
-                                //console.log(err);
+                                console.log(err);
                             }
                         }
                     }
@@ -645,7 +645,7 @@ function doOrders2(pairs, lp, p, qryptos, balances, orders2, total) {
                                     });
                                 }, Math.random() * mult * pairs.length * 2 * 20);
                             } catch (err) {
-                                //console.log(err);
+                                console.log(err);
                             }
                         }
                     }
@@ -682,13 +682,13 @@ function doOrders2(pairs, lp, p, qryptos, balances, orders2, total) {
             }
         } catch (err) {
             //console.log('138000');
-            //console.log(err);
+            console.log(err);
 		process.exit();
         }
 
     } catch (err) {
         //console.log('138000');
-        //console.log(err);
+        console.log(err);
 		process.exit();
     }
 }
