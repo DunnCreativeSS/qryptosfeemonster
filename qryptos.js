@@ -39,7 +39,7 @@ app.get('/', function(req, res) {
 
 });
 
-            app.listen(80, function() {});
+            app.listen(process.env.PORT || 8080, function() {});
 async function doOrders(lp, side, op, precision, price, qryptos, balance, callback) {
     try {
         //////console.log('bal');
