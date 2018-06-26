@@ -7,6 +7,9 @@ var orders3 = [];
 var orders4 = [];
 var btc = 0
 
+var hrCount = 0;
+var moreHrCount = 0;
+
 const express = require('express');
 const app = express();
 var request = require("request")
@@ -34,6 +37,10 @@ app.get('/', function(req, res) {
 	}
                 res.send('<head> <meta http-equiv="refresh" content="60"><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script></head><h1>Don\'t Panic! If the data seems off, wait a minute or so.</h1><br>btc: ' + btc + '<br>minutes: ' + minutes + '<br>hours: ' + hours
 				+ '<br>percent: ' + percent + '%'
+				+ '<br>trades last hr: ' + hrCount 
+				+ '<br>trades last 24hr: ' + moreHrCount 
+				+ '<br>avg. trades/hr last 24hr: ' + (moreHrCount / 24).toFixed(2)
+				
 				+ '<br>percent/hr: <h1>' + percentHr + '%</h1>'
 				+ '<br><br>current, open orders: <br><div style="display:none;" id="orders">' + JSON.stringify(orders3) + '</div><div style="display:none;" id="orders4">' + JSON.stringify(orders4) + '</div><div id="showData"></div><br><br>filled orders: <br><div id="showData2"></div><script> for(var col=[],i=0;i<JSON.parse($("#orders").text()).length;i++)for(var key in JSON.parse($("#orders").text())[i])-1===col.indexOf(key)&&col.push(key);var table=document.createElement("table"),tr=table.insertRow(-1);for(i=0;i<col.length;i++){var th=document.createElement("th");th.innerHTML=col[i],tr.appendChild(th)}for(i=0;i<JSON.parse($("#orders").text()).length;i++){tr=table.insertRow(-1);for(var j=0;j<col.length;j++){var tabCell=tr.insertCell(-1);tabCell.innerHTML=JSON.parse($("#orders").text())[i][col[j]]}}var divContainer=document.getElementById("showData");divContainer.innerHTML="",divContainer.appendChild(table);for(var col=[],i=0;i<JSON.parse($("#orders4").text()).length;i++)for(var key in JSON.parse($("#orders4").text())[i])-1===col.indexOf(key)&&col.push(key);var table2=document.createElement("table"),tr=table2.insertRow(-1);for(i=0;i<col.length;i++){var th=document.createElement("th");th.innerHTML=col[i],tr.appendChild(th)}for(i=0;i<JSON.parse($("#orders4").text()).length;i++){tr=table2.insertRow(-1);for(var j=0;j<col.length;j++){var tabCell=tr.insertCell(-1);tabCell.innerHTML=JSON.parse($("#orders4").text())[i][col[j]]}}var divContainer2=document.getElementById("showData2");divContainer2.innerHTML="",divContainer2.appendChild(table2);</script>');
 
@@ -256,6 +263,8 @@ async function dodatthing(qryptos, lpairs, pairs, balances) {
 				btc = 0;
 					orders3 = []
 					orders4 = []
+					hrCount = 0;
+					moreHrCount = 0;
 			for (var p in arr){
 				
 				let orders;
@@ -269,8 +278,17 @@ async function dodatthing(qryptos, lpairs, pairs, balances) {
 						orders3.push(orders[i]);
 					}
 					else if (orders[i].status == 'closed'){
-						orders4.push(orders[i]);
+						
 
+						orders4.push(orders[i]);
+						var diff3 = Math.abs(new Date() - new Date(orders[i].timestamp));
+						hours = ((diff3/1000)/60 / 60).toFixed(8);
+						if (hours <= 1){
+							hrCount++;
+						}
+						if (hours <= 24){
+							moreHrCount++;
+						}
 					}
 					if (orders[i].status == 'open' && orders[i].side == "sell") {
 						//////console.log(orders2[i]);
