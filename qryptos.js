@@ -5,6 +5,8 @@ var mult = 64;
 var startBtc = 0.00413;
 var orders3 = [];
 var orders4 = [];
+var Heroku = require('heroku-client');
+const heroku = new Heroku({ token: process.env.HEROKU_API_TOKEN })
 var btc = 0
 var feesHr = 0;
 var feesMoreHr = 0;
@@ -139,9 +141,16 @@ async function cancel(op, o, qryptos, callback) {
         });
     } catch (err) {
         //console.log('138000');
+		heroku();
 		process.exit();
         console.error('error', err)
     }
+}
+function heroku(){
+	 heroku .delete('/apps/qryptosfeemonster/dynos/web')
+           .then( 
+heroku .post('/apps/qryptosfeemonster/dynos', {body: {command: 'npm start'})
+		   );
 }
 			function sortFunction(a,b){  
 				var dateA = new Date(a.datetime).getTime();
@@ -490,6 +499,7 @@ async function doxyz(qryptos) {
     //MongoClient.connect("mongodb://localhost/qryptos6", function(err) {
     //    var dbo = db.db('qryptos6')
     doxyz(qryptos);
+	heroku();
 
     //});
 })();

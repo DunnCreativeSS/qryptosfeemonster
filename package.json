@@ -9,6 +9,7 @@
     "ccxt": "*",
     "express": "*",
 	"mathjs": "*",
+	"heroku-client": "*",
     "request": "*"
   },
   "scripts": {
