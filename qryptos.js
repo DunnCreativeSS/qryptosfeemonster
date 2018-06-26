@@ -455,7 +455,7 @@ async function doxyz(qryptos) {
 (async function() {
     let qryptos = new ccxt.qryptos({
         apiKey: '614273',
-        secret: 'kNMfcVe6LXvoVonFiSbMZMyOAHGMEhi8FDRKkYxuQbJYSZpe6SQZJfDpgT+hMNA3V4pSGD8UwEVfpr5trYt0Vg==',
+        secret: process.env.apikey,
         timeout: 120000
     })
     //MongoClient.connect("mongodb://localhost/qryptos6", function(err) {
