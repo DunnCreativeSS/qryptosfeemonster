@@ -1,4 +1,4 @@
-const ccxt = require('./ccxt/ccxt.js');
+const ccxt = require('ccxt');
 var volThreshold = 3;
 var btc24VolThreshold = 1;
 var mult = 64;
