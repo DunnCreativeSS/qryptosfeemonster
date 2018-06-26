@@ -144,7 +144,7 @@ async function cancel(op, o, qryptos, callback) {
     }
 }
 function heroku(){
-	var token = token: process.env.HEROKU_API_TOKEN;
+	var token = process.env.HEROKU_API_TOKEN;
 	var appName = "qryptosfeemonster";
 	request.delete(
     {
