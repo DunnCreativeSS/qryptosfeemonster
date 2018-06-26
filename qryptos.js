@@ -297,18 +297,22 @@ async function dodatthing(qryptos, lpairs, pairs, balances) {
 					feesMoreHr = 0;
 					hrCount = 0;
 					moreHrCount = 0;
+					var oCount = 0;
 			for (var p in arr){
 				
 				let orders;
                 try {
-
+				
 					orders = await qryptos.fetchOrders( lpairs[p].pair, 0, 1000, {status: 'closed'});
                     
 					for (var i in orders) {
 					if (orders[i].status == 'closed'){
 						
-
+						if (oCount <= 15){
+						
 						orders4.push(orders[i]);
+						oCount++;
+						}
 						//console.log(math.format(orders[i].fee.cost,{exponential:{lower:1e-100,upper:1e100}}));
 
 
