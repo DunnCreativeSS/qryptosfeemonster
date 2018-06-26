@@ -297,6 +297,7 @@ async function dodatthing(qryptos, lpairs, pairs, balances) {
 					feesMoreHr = 0;
 					hrCount = 0;
 					moreHrCount = 0;
+					var orders5 = [];
 					var oCount = 0;
 			for (var p in arr){
 				
@@ -308,11 +309,9 @@ async function dodatthing(qryptos, lpairs, pairs, balances) {
 					for (var i in orders) {
 					if (orders[i].status == 'closed'){
 						
-						if (oCount <= 15){
 						
-						orders4.push(orders[i]);
-						oCount++;
-						}
+						orders5.push(orders[i]);
+						
 						//console.log(math.format(orders[i].fee.cost,{exponential:{lower:1e-100,upper:1e100}}));
 
 
@@ -352,7 +351,14 @@ async function dodatthing(qryptos, lpairs, pairs, balances) {
                 doOrders2(pairs, lpairs[p], p, qryptos, balances, orders, pairs.length);
 			}
 			orders3.sort(sortFunction);
-			orders4.sort(sortFunction);
+			orders5.sort(sortFunction);
+			for (var i in orders5){
+				if (oCount <= 15){
+				oCount++;
+				orders4.push(orders5[i]);
+				}
+						
+			}
 					////console.log('btc: ' +( balances.BTC.free + btc) );
 					btc = (balances.BTC.free + btc).toFixed(8);
 					percent =  (100 * (-1 * (1 - (btc / startBtc)))).toFixed(4);
