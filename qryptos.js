@@ -302,14 +302,9 @@ async function dodatthing(qryptos, lpairs, pairs, balances) {
 				let orders;
                 try {
 
-                    orders = await qryptos.fetchOrders(lpairs[p].pair);
-                    //////console.log(orders);
-					for (var i in orders) {
-						
-					if (orders[i].status == 'open'){
-						orders3.push(orders[i]);
-					}
-					else if (orders[i].status == 'closed'){
+					orders = await qryptos.fetchOrders(symbol: lpairs[p].pair, limit:1000, params: {status: 'closed'});
+                    
+					if (orders[i].status == 'closed'){
 						
 
 						orders4.push(orders[i]);
@@ -327,6 +322,14 @@ async function dodatthing(qryptos, lpairs, pairs, balances) {
 							moreHrCount++;
 						}
 					}
+                    orders = await qryptos.fetchOrders(symbol: lpairs[p].pair, limit:1000, params: {status: 'open'});
+                    //////console.log(orders);
+					for (var i in orders) {
+						
+					if (orders[i].status == 'open'){
+						orders3.push(orders[i]);
+					}
+					
 					if (orders[i].status == 'open' && orders[i].side == "sell") {
 						//////console.log(orders2[i]);
 						btc+=(orders[i].price * orders[i].amount);
