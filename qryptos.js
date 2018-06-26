@@ -5,8 +5,6 @@ var mult = 64;
 var startBtc = 0.00413;
 var orders3 = [];
 var orders4 = [];
-var Heroku = require('heroku-client');
-const heroku = new Heroku({ token: process.env.HEROKU_API_TOKEN })
 var btc = 0
 var feesHr = 0;
 var feesMoreHr = 0;
@@ -26,7 +24,7 @@ var diff2
 var minutes
 var hours
 var percentHr
-var startDate = new Date('2018/06/26 22:22')
+var startDate = new Date('2018/06/26 22:43')
 //console.log(startDate.getTime());
 //console.log(new Date().getTime());
 //var MongoClient = require('mongodb').MongoClient;
@@ -146,8 +144,32 @@ async function cancel(op, o, qryptos, callback) {
     }
 }
 function heroku(){
-	heroku .post('/apps/qryptosfeemonster/dynos', {body: {command: 'npm start'})
-	 heroku .delete('/apps/qryptosfeemonster/dynos/web');
+	var token = token: process.env.HEROKU_API_TOKEN;
+	var appName = "qryptosfeemonster";
+	request.delete(
+    {
+        url: 'https://api.heroku.com/apps/' + appName + '/dynos/',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/vnd.heroku+json; version=3',
+            'Authorization': 'Bearer ' + token
+        }
+    },
+    function(error, response, body) {
+        request.post(
+    {
+        url: 'https://api.heroku.com/apps/' + appName + '/dynos/',
+		body: {
+			"command": "npm start"
+		}
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/vnd.heroku+json; version=3',
+            'Authorization': 'Bearer ' + token
+        }
+    }
+    }
+);
 }
 			function sortFunction(a,b){  
 				var dateA = new Date(a.datetime).getTime();
