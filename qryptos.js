@@ -167,7 +167,7 @@ function heroku(){
             'Accept': 'application/vnd.heroku+json; version=3',
             'Authorization': 'Bearer ' + token
         }
-    }
+    });
     }
 );
 }
