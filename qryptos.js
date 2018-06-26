@@ -333,7 +333,7 @@ async function dodatthing(qryptos, lpairs, pairs, balances) {
 					for (var i in orders) {
 						
 					if (orders[i].status == 'open'){
-						orders[i].fee = math.format(orders[i].fee.cost,{exponential:{lower:1e-100,upper:1e100}})
+						orders[i].fee = (orders[i].fee.cost * Math.pow(10,8))
 						orders3.push(orders[i]);
 					}
 					
@@ -354,7 +354,7 @@ async function dodatthing(qryptos, lpairs, pairs, balances) {
 			orders3.sort(sortFunction);
 			orders5.sort(sortFunction);
 			for (var i in orders5){
-				orders5[i].fee = math.format(orders5[i].fee.cost,{exponential:{lower:1e-100,upper:1e100}})
+				orders5[i].fee = (orders5[i].fee.cost * Math.pow(10,8))
 				if (oCount <= 15){
 				oCount++;
 				orders4.push(orders5[i]);
