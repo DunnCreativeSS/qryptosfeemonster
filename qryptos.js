@@ -161,7 +161,7 @@ function heroku(){
         url: 'https://api.heroku.com/apps/' + appName + '/dynos/',
 		body: {
 			"command": "npm start"
-		}
+		},
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/vnd.heroku+json; version=3',
