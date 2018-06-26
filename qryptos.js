@@ -2,7 +2,7 @@ const ccxt = require('ccxt');
 var volThreshold = 3;
 var btc24VolThreshold = 1;
 var mult = 64;
-var startBtc = 0.00414;
+var startBtc = 0.00413;
 var orders3 = [];
 var orders4 = [];
 var btc = 0
@@ -24,7 +24,7 @@ var diff2
 var minutes
 var hours
 var percentHr
-var startDate = new Date('2018/06/26 21:13')
+var startDate = new Date('2018/06/26 22:22')
 //console.log(startDate.getTime());
 //console.log(new Date().getTime());
 //var MongoClient = require('mongodb').MongoClient;
@@ -289,7 +289,7 @@ async function dodatthing(qryptos, lpairs, pairs, balances) {
 						orders4.push(orders[i]);
 						//console.log(math.format(orders[i].fee.cost,{exponential:{lower:1e-100,upper:1e100}}));
 
-						console.log(Number());
+
 						var diff3 = Math.abs(new Date() - new Date(orders[i].timestamp));
 						hours = ((diff3/1000)/60 / 60).toFixed(8);
 						if (hours <= 1){
