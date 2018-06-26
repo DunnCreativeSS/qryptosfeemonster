@@ -8,6 +8,7 @@
     "body-parser": "*",
     "ccxt": "*",
     "express": "*",
+	"mathjs": "*",
     "request": "*"
   },
   "scripts": {
