@@ -1,0 +1,23 @@
+{
+  "author": {
+    "name": "Jarett Dunn",
+    "email": "jarettrsdunn@gmail.com"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "body-parser": "*",
+    "ccxt": "*",
+    "express": "*",
+    "request": "*"
+  },
+  "scripts": {
+    "start": "node qryptos.js"
+  },
+  "deprecated": false,
+  "description": "Engine for Qryptos automation",
+  "engines": {
+    "node": ">=0.6"
+  },
+  "name": "qrytosfeemonster",
+  "version": "1.0.4"
+}
