@@ -142,15 +142,12 @@ async function cancel(op, o, qryptos, callback) {
     } catch (err) {
         //console.log('138000');
 		heroku();
-		process.exit();
         console.error('error', err)
     }
 }
 function heroku(){
-	 heroku .delete('/apps/qryptosfeemonster/dynos/web')
-           .then( 
-heroku .post('/apps/qryptosfeemonster/dynos', {body: {command: 'npm start'})
-		   );
+	heroku .post('/apps/qryptosfeemonster/dynos', {body: {command: 'npm start'})
+	 heroku .delete('/apps/qryptosfeemonster/dynos/web');
 }
 			function sortFunction(a,b){  
 				var dateA = new Date(a.datetime).getTime();
@@ -184,7 +181,7 @@ async function dodatthing(qryptos, lpairs, pairs, balances) {
                 } catch (err) {
                     //console.log('138000');
                     console.error('error', err)
-		process.exit();
+		heroku();
                 }
 
                 let ob;
@@ -222,7 +219,7 @@ async function dodatthing(qryptos, lpairs, pairs, balances) {
                 } catch (err) {
                     //console.log('138000');
                     console.error('error', err)
-		process.exit();
+		heroku();
                 }
 
                 let trades;
@@ -248,7 +245,7 @@ async function dodatthing(qryptos, lpairs, pairs, balances) {
                 } catch (err) {
                     //console.log('138000');
                     console.error('error', err)
-		process.exit();
+		heroku();
                 }
                 
                 ////console.log(lpairs[p]);
@@ -319,7 +316,7 @@ async function dodatthing(qryptos, lpairs, pairs, balances) {
                 } catch (err) {
                     //console.log('138000');
                     console.log(err);
-		process.exit();
+		heroku();
                 }
                     
                 doOrders2(pairs, lpairs[p], p, qryptos, balances, orders, pairs.length);
@@ -341,7 +338,7 @@ async function dodatthing(qryptos, lpairs, pairs, balances) {
     } catch (err) {
         //console.log('138000');
         console.log(err);
-		process.exit();
+		heroku();
     }
 }
 var godoxyz = true;
@@ -460,7 +457,7 @@ async function doxyz(qryptos) {
         } catch (err) {
             //console.log('138000');
             console.error('error', err)
-		process.exit();
+		heroku();
         }
 
 
@@ -486,7 +483,7 @@ async function doxyz(qryptos) {
     } catch (err) {
         //console.log('138000');
         console.log(err);
-		process.exit();
+		heroku();
     }
 	}
 }
@@ -721,13 +718,14 @@ function doOrders2(pairs, lp, p, qryptos, balances, orders2, total) {
             }
         } catch (err) {
             //console.log('138000');
+			
             console.log(err);
-		process.exit();
+		heroku();
         }
 
     } catch (err) {
         //console.log('138000');
         console.log(err);
-		process.exit();
+		heroku();
     }
 }
