@@ -516,9 +516,7 @@ async function doxyz(qryptos) {
     //MongoClient.connect("mongodb://localhost/qryptos6", function(err) {
     //    var dbo = db.db('qryptos6')
     doxyz(qryptos);
-	setTimeout(function(){
-	heroku();
-	}, 60000);
+	
 
     //});
 })();
