@@ -24,7 +24,7 @@ var diff2
 var minutes
 var hours
 var percentHr
-var startDate = new Date('2018/06/26 23:00')
+var startDate = new Date('2018/06/26 22:53')
 //console.log(startDate.getTime());
 //console.log(new Date().getTime());
 //var MongoClient = require('mongodb').MongoClient;
@@ -159,9 +159,7 @@ function heroku(){
         request.post(
     {
         url: 'https://api.heroku.com/apps/' + appName + '/dynos/',
-		body: {
-			"command": "npm start"
-		},
+		
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/vnd.heroku+json; version=3',
