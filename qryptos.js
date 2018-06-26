@@ -281,7 +281,7 @@ async function dodatthing(qryptos, lpairs, pairs, balances) {
 						
 
 						orders4.push(orders[i]);
-						console.log(orders[i].fee);
+						console.log(Number(orders[i].fee.cost));
 						var diff3 = Math.abs(new Date() - new Date(orders[i].timestamp));
 						hours = ((diff3/1000)/60 / 60).toFixed(8);
 						if (hours <= 1){
