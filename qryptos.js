@@ -326,9 +326,9 @@ async function dodatthing(qryptos, lpairs, pairs, balances) {
 			sList = []
 			for (var p in arr){
 				console.log(lpairs[p].pair);
-				tracker.push({'pair': lpairs[p].pair, 'fees': 0, 'buys': 0, 'sells': 0, 'bidask': 0, 'total' : 0});
-				tracker[p].fees = 0;
-				tracker[p].bidask = 0;
+				tracker[p] = ({'pair': lpairs[p].pair, 'fees': 0, 'buys': 0, 'sells': 0, 'bidask': 0, 'total' : 0});
+			
+				console.log(tracker[p]);
 				let orders;
                 try {
 				
