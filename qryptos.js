@@ -28,7 +28,7 @@ var diff2
 var minutes
 var hours
 var percentHr
-var startDate = new Date('2018/06/27 20:22')
+var startDate = new Date('2018/06/27 18:22')
 //console.log(startDate.getTime());
 //console.log(new Date().getTime());
 //var MongoClient = require('mongodb').MongoClient;
