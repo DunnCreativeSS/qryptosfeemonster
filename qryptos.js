@@ -72,11 +72,11 @@ async function doOrders(lp, side, op, precision, price, qryptos, balance, callba
         if (side == 'buy') {
 			var balance2 = balance;
 			console.log('buy init bal ' + balance);
-				if ((balance / 4.05).toFixed(8) < lp.minimum) {
+				if ((balance / 4.05).toFixed(8) > lp.minimum) {
 			
 				balance = (balance2 / 4.05).toFixed(8);
 				}
-			else if ((balance / 1.75).toFixed(8) < lp.minimum) {
+			else if ((balance / 1.75).toFixed(8) > lp.minimum) {
 			
 				balance = (balance2 / 1.75).toFixed(8);
 				}
