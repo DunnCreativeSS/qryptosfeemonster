@@ -329,6 +329,29 @@ async function dodatthing(qryptos, lpairs, pairs, balances) {
 				let orders;
                 try {
 				
+					orders = await qryptos.fetchOrders( lpairs[p].pair, 0, 1000, {status: 'cancelled'});
+                    
+					for (var i in orders) {
+					if (orders[i].status == 'cancelled'){
+						
+						
+						
+						//console.log(math.format(orders[i].fee.cost,{exponential:{lower:1e-100,upper:1e100}}));
+
+
+						var diff3 = Math.abs(new Date() - new Date(orders[i].timestamp));
+						hours = ((diff3/1000)/60 / 60).toFixed(8);
+						if (hours <= 1){
+							feesHr +=(orders[i].fee.cost * Math.pow(10,8));
+							hrCount++;
+						}
+						if (hours <= 24){
+							feesMoreHr+=(orders[i].fee.cost * Math.pow(10,8));
+							moreHrCount++;
+						}
+					}
+					
+					}
 					orders = await qryptos.fetchOrders( lpairs[p].pair, 0, 1000, {status: 'closed'});
                     
 					for (var i in orders) {
