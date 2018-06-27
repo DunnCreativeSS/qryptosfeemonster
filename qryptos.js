@@ -81,7 +81,7 @@ async function doOrders(lp, side, op, precision, price, qryptos, balance, callba
 				balance = (balance2 / 1.75).toFixed(8);
 				}
 				else {
-									balance = balance2 /  price	
+									balance = (balance2 /  price * .995).toFixed(8);	
 
 				}
 			
