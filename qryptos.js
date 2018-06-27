@@ -943,7 +943,7 @@ function doOrders2(pairs, lp, p, qryptos, balances, orders2, total) {
                    //	 //console.log('settimeout');
                     setTimeout(function() {
                         doxyz(qryptos)
-                    }, 30000);
+                    }, 60000);
                 }
             }
         } catch (err) {
