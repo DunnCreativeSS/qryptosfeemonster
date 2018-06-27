@@ -589,7 +589,7 @@ async function doxyz(qryptos) {
                             })
                         }
                         if (response[d].base == "FLIXX") {
-                            minimum = 50;
+                            minimum = 90;
                             which = "FLIXX"
                             pairs.push({
                                 'which': which,
@@ -602,7 +602,7 @@ async function doxyz(qryptos) {
                             })
                         }
                         if (response[d].base == "TPAY") {
-                            minimum = 0.001;
+                            minimum = 1.5;
                             which = "TPAY"
                             pairs.push({
                                 'which': which,
@@ -615,7 +615,7 @@ async function doxyz(qryptos) {
                             })
                         }
                         if (response[d].base == "STX") {
-                            minimum = 10;
+                            minimum = 230;
                             which = "STX"
                             pairs.push({
                                 'which': which,
@@ -628,7 +628,7 @@ async function doxyz(qryptos) {
                             })
                         }
                         if (response[d].base == "IPSX") {
-                            minimum = 5;
+                            minimum = 1300;
                             which = "IPSX"
                             pairs.push({
                                 'which': which,
