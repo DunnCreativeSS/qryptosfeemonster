@@ -334,15 +334,15 @@ async function dodatthing(qryptos, lpairs, pairs, balances) {
 			var counts = []
 			sList = []
 			for (var p in arr){
-				console.log(lpairs[p].pair);
-				tracker[p] = ({'pair': lpairs[p].pair, 'fees': 0, 'buys': 0, 'sells': 0, 'bidask': 0, 'total' : 0});
-			
-				console.log(tracker[p]);
+				
 				let orders;
                 try {
 				
 					orders = await qryptos.fetchOrders( lpairs[p].pair, 0, 100000);
-                    
+                    console.log(lpairs[p].pair);
+					tracker[p] = ({'pair': lpairs[p].pair, 'fees': 0, 'buys': 0, 'sells': 0, 'bidask': 0, 'total' : 0});
+				
+					console.log(tracker[p]);
 					for (var i in orders) {
 						
 						tracker[p].fees += (-1 * orders[i].fee.cost);
