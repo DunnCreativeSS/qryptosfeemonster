@@ -352,7 +352,7 @@ async function dodatthing(qryptos, lpairs, pairs, balances) {
 							hrCount++;
 						}
 						if (hours <= 24){
-							
+							if (tracker[p].pair == lpairs[p].pair){
 						tracker[p].fees += (-1 * orders[i].fee.cost);
 						if (orders5[i].side == 'buy'){
 						tracker[p].buys = tracker[p].buys - (orders5[i].amount * orders5[i].price);  
@@ -363,6 +363,7 @@ async function dodatthing(qryptos, lpairs, pairs, balances) {
 						
 						tracker[p].bidask = tracker[p].sells+ tracker[p].buys;
 						tracker[p].total = tracker[p].bidask + tracker[p].fees;
+							}
 							feesMoreHr+=(orders[i].fee.cost * Math.pow(10,8));
 							moreHrCount++;
 						}
