@@ -704,8 +704,7 @@ function doOrders2(pairs, lp, p, qryptos, balances, orders2, total) {
                             }, Math.random() * mult * pairs.length * 2 * 75);
                         } 
 								}
-								else {
-                        if (orders[p][o].side == 'buy' && orders[p][o].price != lp.ob.bid.price) {
+								else if (orders[p][o].side == 'buy' && orders[p][o].price != lp.ob.bid.price) {
                            // //console.log('cancelling buy');
                             setTimeout(function() {
 
@@ -724,8 +723,7 @@ function doOrders2(pairs, lp, p, qryptos, balances, orders2, total) {
                             }
                                 });
                             }, Math.random() * mult * pairs.length * 2 * 75);
-                        } 
-								}else {
+                        } else {
                             if (orders[p][o].side == 'buy') {
                               //  //console.log('not cancel buy');
                                 ////console.log(orders[p][o].price);
