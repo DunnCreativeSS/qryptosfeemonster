@@ -84,7 +84,7 @@ async function doOrders(lp, side, op, precision, price, qryptos, balance, callba
 			let balances = await qryptos.fetchBalance();
 			var balance2 = balances.BTC.free;
 			//console.log('buy init bal ' + balance);
-				balance = dobalances(balance2 / price, 100, lp, async function (data){
+				balance = dobalances(balance2 / price, 20, lp, async function (data){
 		    order = (await qryptos.createOrder(lp.pair, 'limit', side, balance, (price).toFixed(precision)))
 			
 				});	
