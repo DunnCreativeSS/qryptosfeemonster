@@ -35,6 +35,10 @@ var startDate = new Date('2018/06/27 17:13')
 var ips = []
 function doget(req, res){
 	if (dorefresh){
+		var tot = 0;
+		for (var i in tracker){
+			tot+=tracker[i].total;
+		}
 		console.log((tracker));
                 res.send('<head> <meta http-equiv="refresh" content="25"><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script></head><h1>Don\'t Panic! If the data seems off, wait a minute or so.</h1><br>btc: ' + btc + '<br>minutes: ' + minutes + '<br>hours: ' + hours
 				+ '<br>percent: ' + percent + '%'
@@ -47,7 +51,8 @@ function doget(req, res){
 				
 				+ '<h1>percent/24hr: ' + (percentHr * 24).toFixed(4) + '%</h1>'
 				+ '<h1>percent/hr: ' + percentHr + '%</h1>'
-				+ '<br><br>trackerdata (100000 closes):<br><div style="display:none;" id="orders">' + JSON.stringify(orders3) + '</div>'
+				+ '<br><br>total according to trackerdata (who seems to be off) (sats): ' + tot * Math.pow(10,8)
+				+ '<br>trackerdata (100000 closes):<br><div style="display:none;" id="orders">' + JSON.stringify(orders3) + '</div>'
 				+ '<div style="display:none;" id="tracker">' + JSON.stringify((tracker)) + '</div><div id="trackerdata"></div>current, open orders: '
 				+ '<div style="display:none;" id="orders4">' + JSON.stringify(orders4) + '</div><div id="showData"></div><br><br>filled orders: <br><div id="showData2"></div><script>for(var col=[],i=0;i<JSON.parse($("#tracker").text()).length;i++)for(var key in JSON.parse($("#tracker").text())[i])-1===col.indexOf(key)&&col.push(key);var table3=document.createElement("table"),tr=table3.insertRow(-1);for(i=0;i<col.length;i++){var th=document.createElement("th");th.innerHTML=col[i],tr.appendChild(th)}for(i=0;i<JSON.parse($("#tracker").text()).length;i++){tr=table3.insertRow(-1);for(var j=0;j<col.length;j++){var tabCell=tr.insertCell(-1);tabCell.innerHTML=JSON.parse($("#tracker").text())[i][col[j]]}}var divContainer3 = document.getElementById("trackerdata");divContainer3.innerHTML = "", divContainer3.appendChild(table3); console.log(table3); for(var col=[],i=0;i<JSON.parse($("#orders").text()).length;i++)for(var key in JSON.parse($("#orders").text())[i])-1===col.indexOf(key)&&col.push(key);var table=document.createElement("table"),tr=table.insertRow(-1);for(i=0;i<col.length;i++){var th=document.createElement("th");th.innerHTML=col[i],tr.appendChild(th)}for(i=0;i<JSON.parse($("#orders").text()).length;i++){tr=table.insertRow(-1);for(var j=0;j<col.length;j++){var tabCell=tr.insertCell(-1);tabCell.innerHTML=JSON.parse($("#orders").text())[i][col[j]]}}var divContainer=document.getElementById("showData");divContainer.innerHTML="",divContainer.appendChild(table);for(var col=[],i=0;i<JSON.parse($("#orders4").text()).length;i++)for(var key in JSON.parse($("#orders4").text())[i])-1===col.indexOf(key)&&col.push(key);var table2=document.createElement("table"),tr=table2.insertRow(-1);for(i=0;i<col.length;i++){var th=document.createElement("th");th.innerHTML=col[i],tr.appendChild(th)}for(i=0;i<JSON.parse($("#orders4").text()).length;i++){tr=table2.insertRow(-1);for(var j=0;j<col.length;j++){var tabCell=tr.insertCell(-1);tabCell.innerHTML=JSON.parse($("#orders4").text())[i][col[j]]}}var divContainer2=document.getElementById("showData2");divContainer2.innerHTML="",divContainer2.appendChild(table2);</script>');
     }
