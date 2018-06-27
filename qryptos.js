@@ -33,7 +33,7 @@ var startDate = new Date('2018/06/27 03:00')
 var ips = []
 function doget(req, res){
 	if (dorefresh){
-                res.send('<head> <meta http-equiv="refresh" content="25"><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script></head><h1>Don\'t Panic! If the data seems off, wait a minute or so.</h1><br>btc: ' + btc + '<br>minutes: ' + minutes + '<br>hours: ' + hours
+                res.send('<head> <meta http-equiv="refresh" content="65"><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script></head><h1>Don\'t Panic! If the data seems off, wait a minute or so.</h1><br>btc: ' + btc + '<br>minutes: ' + minutes + '<br>hours: ' + hours
 				+ '<br>percent: ' + percent + '%'
 				+ '<br>trades last hr: ' + hrCount 
 				+ '<br>trades last 24hr: ' + moreHrCount 
@@ -89,7 +89,7 @@ async function doOrders(lp, side, op, precision, price, qryptos, balance, callba
 			
 				});	
 			
-			//console.log(lp.pair + ' balance: ' + balance + ' price: ' + price);
+			//console.log(lp.pair + ' balance: ' + balance + ' price: ' + price);z
         } else {
             order = (await qryptos.createOrder(lp.pair, 'limit', side, balance, (price).toFixed(precision)))
 
@@ -566,7 +566,7 @@ async function doxyz(qryptos) {
 }
 (async function() {
     let qryptos = new ccxt.qryptos({
-        apiKey: '616121',
+        apiKey: '616149',
         secret: process.env.apikey,
         timeout: 120000
     })
@@ -873,7 +873,7 @@ function doOrders2(pairs, lp, p, qryptos, balances, orders2, total) {
                    //	 //console.log('settimeout');
                     setTimeout(function() {
                         doxyz(qryptos)
-                    }, 30000);
+                    }, 60000);
                 }
             }
         } catch (err) {
