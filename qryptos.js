@@ -127,7 +127,7 @@ async function doOrders(lp, side, op, precision, price, qryptos, balance, callba
 		if (err.toString().indexOf('not_enough_free_balance') != -1 && errCount <= 5){
 			let balances = await qryptos.fetchBalance();
 			try {
-			order = (await qryptos.createOrder(lp.pair, 'limit', side, (balances.BTC.free / price).toFixed(8), (price).toFixed(precision)))
+			order = (await qryptos.createOrder(lp.pair, 'limit', side, (balances.BTC.free / price *.995).toFixed(8), (price).toFixed(precision)))
 			} catch (err){
 				console.log(err);
 			}
