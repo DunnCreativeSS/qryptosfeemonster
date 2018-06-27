@@ -78,6 +78,7 @@ async function doOrders(lp, side, op, precision, price, qryptos, balance, callba
 			else if ((balance / 2.05).toFixed(8) < lp.minimum) {
 				balance = balance /  (price).toFixed(precision)	
 			}
+			else{
             balance = (balance / 4.05).toFixed(8); //12.01
 			}
             order = (await qryptos.createOrder(lp.pair, 'limit', side, balance, (price).toFixed(precision)))
