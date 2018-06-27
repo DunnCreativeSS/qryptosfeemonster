@@ -612,25 +612,31 @@ function doOrders2(pairs, lp, p, qryptos, balances, orders2, total) {
 				console.log('askrate: ' + askrate);
 				console.log('bid price: ' + lp.ob.bid.price * bidrate);
 				console.log('ask price: ' + lp.ob.ask.price * askrate); */
+				for (var o in orders[p]) {
+                        ////console.log(orders[p][o]);
+						var d = new Date();
+						var d2 = new Date(orders[p][o].timestamp);
+						var diff = Math.abs(d - d2);
+						var minutes = Math.floor((diff/1000)/60)
+						//console.log('minutes: ' + minutes);
+						if((minutes > 9)){
+							////console.log('old buy order...');
+							// //console.log('cancelling buy');
+                            setTimeout(function() {
+
+                                cancel(orders[p][o], o, qryptos, function(data) {
+								
+									});
+                            }, Math.random() * mult * pairs.length * 2 * 75);
+						}
+						
+				}
                 if (lp.recentTrade.price <= lp.ticker.ask && lp.recentTrade.price >= lp.ticker.bid) {
                     ////console.log('go!');
                     //createOrder (symbol, type, side, amount, price = undefined, params = {}) 
                     price = lp.ob.ask.price * askrate;
 
                     for (var o in orders[p]) {
-						var d = new Date();
-						var d2 = new Date(orders[p][o].timestamp);
-						var diff = Math.abs(d - d2);
-						var minutes = Math.floor((diff/1000)/60)
-						//console.log('minutes: ' + minutes);
-						if(orders[p][o].side == 'sell' && (minutes > 9)){
-							////console.log('old sell order');
-							 setTimeout(function() {
-                                cancel(orders[p][o], o, qryptos, function(data) {
-
-								});
-							 },Math.random() * mult * pairs.length * 2 * 40);
-						}
                         //////console.log(orders[p][o][abc]);
                         //////console.log(orders[p][o].side);
                         //////console.log(orders[p][o].price);
@@ -700,21 +706,6 @@ function doOrders2(pairs, lp, p, qryptos, balances, orders2, total) {
 					
                     for (var o in orders[p]) {
                         ////console.log(orders[p][o]);
-						var d = new Date();
-						var d2 = new Date(orders[p][o].timestamp);
-						var diff = Math.abs(d - d2);
-						var minutes = Math.floor((diff/1000)/60)
-						//console.log('minutes: ' + minutes);
-						if((minutes > 9)){
-							////console.log('old buy order...');
-							// //console.log('cancelling buy');
-                            setTimeout(function() {
-
-                                cancel(orders[p][o], o, qryptos, function(data) {
-								
-									});
-                            }, Math.random() * mult * pairs.length * 2 * 75);
-						}
 						
 								if (sList.includes(lp.pair)){
 									 if (orders[p][o].side == 'buy' && orders[p][o].price != lp.ob.bid2.price) {
