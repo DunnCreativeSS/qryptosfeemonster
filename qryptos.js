@@ -756,7 +756,7 @@ function doOrders2(pairs, lp, p, qryptos, balances, orders2, total) {
                             ////console.log(lp.ob.ask.price * askrate);
                             try {
                                 setTimeout(function() {
-                                    doOrders(lp, 'sell', orders[p], lp.precision, lp.ob.ask2.price * askrate* askrate, qryptos, balances[lp.which].free, function(data) {
+                                    doOrders(lp, 'sell', orders[p], lp.precision, lp.ob.ask.price *askrate, qryptos, balances[lp.which].free, function(data) {
 
                                         //////console.log(data);
                                     });
