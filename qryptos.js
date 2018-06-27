@@ -1,6 +1,6 @@
-const ccxt = require('ccxt');
+const ccxt = require('./ccxt/ccxt.js');
 var volThreshold = 3;
-var btc24VolThreshold = 0.01;
+var btc24VolThreshold = 1;
 var mult = 64;
 var startBtc =  0.00406720;
 var orders3 = [];
@@ -191,7 +191,7 @@ async function dodatthing(qryptos, lpairs, pairs, balances) {
 		var index = 0;
         for (var p in pairs) {
             //////console.log(pairs[p].pair);
-            if (pairs[p].pair == "ETH/BTC" || pairs[p].pair == "BCH/BTC" || pairs[p].pair == "FSN/BTC" || pairs[p].pair == "NEO/BTC" || pairs[p].pair == "ENJ/BTC" || pairs[p].pair == "QTUM/BTC") { // only btc? //hardwire btc/eth
+            if (pairs[p].pair == "ETH/BTC" || pairs[p].pair == "FLIXX/BTC" ||pairs[p].pair == "STX/BTC" ||pairs[p].pair == "TPAY/BTC" ||pairs[p].pair == "IPSX/BTC" ||pairs[p].pair == "BCH/BTC" || pairs[p].pair == "FSN/BTC" || pairs[p].pair == "NEO/BTC" || pairs[p].pair == "ENJ/BTC" || pairs[p].pair == "QTUM/BTC") { // only btc? //hardwire btc/eth
                 //////console.log(balances[lp.which].free);//hardwire btc/eth
                 //////console.log(balances.BTC.free);//hardwire btc/eth
                 lpairs[index] = {}
@@ -427,13 +427,21 @@ async function doxyz(qryptos) {
             response = await qryptos.loadMarkets()
             for (var d in response) {
                 // ////console.log(d);
-                if ((response[d].info.volume_24h * response[d].info.last_traded_price) > btc24VolThreshold * 10) {
+                if ((response[d].info.volume_24h * response[d].info.last_traded_price) > btc24VolThreshold) {
+				if (response[d].quote == "BTC"){
+						console.log(response[d].symbol);
+						console.log(response[d].info.volume_24h);
+				}
                     if (response[d].quote == "BTC" && (response[d].base == "ETH" ||
                             response[d].base == "NEO" ||
                             response[d].base == "BCH" ||
                             response[d].base == "FSN" ||
                             response[d].base == "QTUM" ||
-                            response[d].base == "ENJ")) {
+                            response[d].base == "ENJ" ||
+                            response[d].base == "STX" ||
+                            response[d].base == "TPAY" ||
+                            response[d].base == "IPSX" ||
+                            response[d].base == "FLIXX")) {
                         //////console.log(d);
                         //////console.log(response[d].info.volume_24h* response[d].info.last_traded_price);
                         //////////console.log(d);
@@ -518,6 +526,58 @@ async function doxyz(qryptos) {
                                 'info': response[d]['info']
                             })
                         }
+                        if (response[d].base == "FLIXX") {
+                            minimum = 50;
+                            which = "FLIXX"
+                            pairs.push({
+                                'which': which,
+                                'minimum': minimum,
+                                'precision': response[d].precision.price,
+                                'pair': d,
+                                'quote': response[d]['quote'],
+                                'base': response[d]['base'],
+                                'info': response[d]['info']
+                            })
+                        }
+                        if (response[d].base == "TPAY") {
+                            minimum = 0.001;
+                            which = "TPAY"
+                            pairs.push({
+                                'which': which,
+                                'minimum': minimum,
+                                'precision': response[d].precision.price,
+                                'pair': d,
+                                'quote': response[d]['quote'],
+                                'base': response[d]['base'],
+                                'info': response[d]['info']
+                            })
+                        }
+                        if (response[d].base == "STX") {
+                            minimum = 10;
+                            which = "STX"
+                            pairs.push({
+                                'which': which,
+                                'minimum': minimum,
+                                'precision': response[d].precision.price,
+                                'pair': d,
+                                'quote': response[d]['quote'],
+                                'base': response[d]['base'],
+                                'info': response[d]['info']
+                            })
+                        }
+                        if (response[d].base == "IPSX") {
+                            minimum = 5;
+                            which = "IPSX"
+                            pairs.push({
+                                'which': which,
+                                'minimum': minimum,
+                                'precision': response[d].precision.price,
+                                'pair': d,
+                                'quote': response[d]['quote'],
+                                'base': response[d]['base'],
+                                'info': response[d]['info']
+                            })
+                        }
                     }
                 }
             }
@@ -562,7 +622,7 @@ async function doxyz(qryptos) {
 (async function() {
     let qryptos = new ccxt.qryptos({
         apiKey: '616149',
-        secret: process.env.apikey,
+        secret: process.env.apikey || "JbXLyTEQObn+bRHyTLnW2GZX4jnHYy4eK6Eqc4xeSKAEmi3ODFAsCdwx8Ps8zlTevjfLgjpcPrxvymA4CA0ccA==",
         timeout: 120000
     })
     //MongoClient.connect("mongodb://localhost/qryptos6", function(err) {

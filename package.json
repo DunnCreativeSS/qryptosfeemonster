@@ -5,11 +5,11 @@
   },
   "bundleDependencies": false,
   "dependencies": {
-    "body-parser": "*",
+    "body-parser": "^1.18.3",
     "ccxt": "*",
-    "express": "*",
-	"mathjs": "*",
-    "request": "*"
+    "express": "^4.16.3",
+    "mathjs": "^5.0.0",
+    "request": "^2.87.0"
   },
   "scripts": {
     "start": "node qryptos.js"
