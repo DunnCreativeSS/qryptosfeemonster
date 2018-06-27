@@ -1,4 +1,4 @@
-const ccxt = require('ccxt');
+const ccxt = require('./ccxt/ccxt.js');
 var volThreshold = 3;
 var btc24VolThreshold = 1;
 var mult = 64;
@@ -35,6 +35,7 @@ var startDate = new Date('2018/06/27 17:13')
 var ips = []
 function doget(req, res){
 	if (dorefresh){
+		console.log((tracker));
                 res.send('<head> <meta http-equiv="refresh" content="25"><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script></head><h1>Don\'t Panic! If the data seems off, wait a minute or so.</h1><br>btc: ' + btc + '<br>minutes: ' + minutes + '<br>hours: ' + hours
 				+ '<br>percent: ' + percent + '%'
 				+ '<br>trades last hr: ' + hrCount 
@@ -46,9 +47,9 @@ function doget(req, res){
 				
 				+ '<h1>percent/24hr: ' + (percentHr * 24).toFixed(4) + '%</h1>'
 				+ '<h1>percent/hr: ' + percentHr + '%</h1>'
-				+ '<br><br>current, open orders: <br><div style="display:none;" id="orders">' + JSON.stringify(orders3) + '</div>'
-				+ '<div style="display:none;" id="tracker">' + JSON.stringify(tracker) + '</div><div id="trackerdata"></div>'
-				+ '<div style="display:none;" id="orders4">' + JSON.stringify(orders4) + '</div><div id="showData"></div><br><br>filled orders: <br><div id="showData2"></div><script>for(var col=[],i=0;i<JSON.parse($("#tracker").text()).length;i++)for(var key in JSON.parse($("#tracker").text())[i])-1===col.indexOf(key)&&col.push(key);var table3=document.createElement("table"),tr=table3.insertRow(-1);for(i=0;i<col.length;i++){var th=document.createElement("th");th.innerHTML=col[i],tr.appendChild(th)}for(i=0;i<JSON.parse($("#tracker").text()).length;i++){tr=table3.insertRow(-1);for(var j=0;j<col.length;j++){var tabCell=tr.insertCell(-1);tabCell.innerHTML=JSON.parse($("#tracker").text())[i][col[j]]}}var divContainer3 = document.getElementById("trackerdata");divContainer3.innerHTML = "", divContainer3.appendChild(table3); for(var col=[],i=0;i<JSON.parse($("#orders").text()).length;i++)for(var key in JSON.parse($("#orders").text())[i])-1===col.indexOf(key)&&col.push(key);var table=document.createElement("table"),tr=table.insertRow(-1);for(i=0;i<col.length;i++){var th=document.createElement("th");th.innerHTML=col[i],tr.appendChild(th)}for(i=0;i<JSON.parse($("#orders").text()).length;i++){tr=table.insertRow(-1);for(var j=0;j<col.length;j++){var tabCell=tr.insertCell(-1);tabCell.innerHTML=JSON.parse($("#orders").text())[i][col[j]]}}var divContainer=document.getElementById("showData");divContainer.innerHTML="",divContainer.appendChild(table);for(var col=[],i=0;i<JSON.parse($("#orders4").text()).length;i++)for(var key in JSON.parse($("#orders4").text())[i])-1===col.indexOf(key)&&col.push(key);var table2=document.createElement("table"),tr=table2.insertRow(-1);for(i=0;i<col.length;i++){var th=document.createElement("th");th.innerHTML=col[i],tr.appendChild(th)}for(i=0;i<JSON.parse($("#orders4").text()).length;i++){tr=table2.insertRow(-1);for(var j=0;j<col.length;j++){var tabCell=tr.insertCell(-1);tabCell.innerHTML=JSON.parse($("#orders4").text())[i][col[j]]}}var divContainer2=document.getElementById("showData2");divContainer2.innerHTML="",divContainer2.appendChild(table2);</script>');
+				+ '<br><br>trackerdata (24hr):<br><div style="display:none;" id="orders">' + JSON.stringify(orders3) + '</div>'
+				+ '<div style="display:none;" id="tracker">' + JSON.stringify((tracker)) + '</div><div id="trackerdata"></div>current, open orders: '
+				+ '<div style="display:none;" id="orders4">' + JSON.stringify(orders4) + '</div><div id="showData"></div><br><br>filled orders: <br><div id="showData2"></div><script>for(var col=[],i=0;i<JSON.parse($("#tracker").text()).length;i++)for(var key in JSON.parse($("#tracker").text())[i])-1===col.indexOf(key)&&col.push(key);var table3=document.createElement("table"),tr=table3.insertRow(-1);for(i=0;i<col.length;i++){var th=document.createElement("th");th.innerHTML=col[i],tr.appendChild(th)}for(i=0;i<JSON.parse($("#tracker").text()).length;i++){tr=table3.insertRow(-1);for(var j=0;j<col.length;j++){var tabCell=tr.insertCell(-1);tabCell.innerHTML=JSON.parse($("#tracker").text())[i][col[j]]}}var divContainer3 = document.getElementById("trackerdata");divContainer3.innerHTML = "", divContainer3.appendChild(table3); console.log(table3); for(var col=[],i=0;i<JSON.parse($("#orders").text()).length;i++)for(var key in JSON.parse($("#orders").text())[i])-1===col.indexOf(key)&&col.push(key);var table=document.createElement("table"),tr=table.insertRow(-1);for(i=0;i<col.length;i++){var th=document.createElement("th");th.innerHTML=col[i],tr.appendChild(th)}for(i=0;i<JSON.parse($("#orders").text()).length;i++){tr=table.insertRow(-1);for(var j=0;j<col.length;j++){var tabCell=tr.insertCell(-1);tabCell.innerHTML=JSON.parse($("#orders").text())[i][col[j]]}}var divContainer=document.getElementById("showData");divContainer.innerHTML="",divContainer.appendChild(table);for(var col=[],i=0;i<JSON.parse($("#orders4").text()).length;i++)for(var key in JSON.parse($("#orders4").text())[i])-1===col.indexOf(key)&&col.push(key);var table2=document.createElement("table"),tr=table2.insertRow(-1);for(i=0;i<col.length;i++){var th=document.createElement("th");th.innerHTML=col[i],tr.appendChild(th)}for(i=0;i<JSON.parse($("#orders4").text()).length;i++){tr=table2.insertRow(-1);for(var j=0;j<col.length;j++){var tabCell=tr.insertCell(-1);tabCell.innerHTML=JSON.parse($("#orders4").text())[i][col[j]]}}var divContainer2=document.getElementById("showData2");divContainer2.innerHTML="",divContainer2.appendChild(table2);</script>');
     }
 	else {
 		setTimeout(function(){
@@ -84,9 +85,9 @@ async function doOrders(lp, side, op, precision, price, qryptos, balance, callba
             balance = (balance / 4.05).toFixed(8); //12.01
 			}
 			balance = lp.minimum;
-            order = (await qryptos.createOrder(lp.pair, 'limit', side, balance, (price).toFixed(precision)))
+            //order = (await qryptos.createOrder(lp.pair, 'limit', side, balance, (price).toFixed(precision)))
         } else {
-            order = (await qryptos.createOrder(lp.pair, 'limit', side, balance, (price).toFixed(precision)))
+           // order = (await qryptos.createOrder(lp.pair, 'limit', side, balance, (price).toFixed(precision)))
 
         }
         ////////console.log(order);
@@ -193,6 +194,7 @@ function heroku(){
 async function dodatthing(qryptos, lpairs, pairs, balances) {
     try {
 		var index = 0;
+		
         for (var p in pairs) {
             //////console.log(pairs[p].pair);
             if (pairs[p].pair == "ETH/BTC" || pairs[p].pair == "FLIXX/BTC" ||pairs[p].pair == "STX/BTC" ||pairs[p].pair == "TPAY/BTC" ||pairs[p].pair == "IPSX/BTC" ||pairs[p].pair == "BCH/BTC" || pairs[p].pair == "FSN/BTC" || pairs[p].pair == "NEO/BTC" || pairs[p].pair == "ENJ/BTC" || pairs[p].pair == "QTUM/BTC") { // only btc? //hardwire btc/eth
@@ -312,6 +314,7 @@ async function dodatthing(qryptos, lpairs, pairs, balances) {
 				dorefresh = false;
 				btc = 0;
 					orders3 = []
+					tracker = []
 					orders4 = []
 					feesHr = 0;
 					feesMoreHr = 0;
@@ -321,11 +324,11 @@ async function dodatthing(qryptos, lpairs, pairs, balances) {
 					var oCount = 0;
 			var counts = []
 			sList = []
-			tracker = []
 			for (var p in arr){
-				tracker[lpairs[p].symbol] = []
-				tracker[lpairs[p].symbol].fees = 0;
-				tracker[lpairs[p].symbol].bidask = 0;
+				console.log(lpairs[p].pair);
+				tracker.push({'pair': lpairs[p].pair, 'fees': 0, 'buys': 0, 'sells': 0, 'bidask': 0, 'total' : 0});
+				tracker[p].fees = 0;
+				tracker[p].bidask = 0;
 				let orders;
                 try {
 				
@@ -337,13 +340,7 @@ async function dodatthing(qryptos, lpairs, pairs, balances) {
 						
 						orders5.push(orders[i]);
 						
-						tracker[lpairs[p].symbol].fees += (-1 * orders[i].fee.cost);
-						if (orders5[i].side == 'buy'){
-						tracker[lpairs[p].symbol].bidask = tracker[lpairs[p].symbol].bidask -  (orders5[i].amount * orders5[i].price);  
-						}
-						else {
-							tracker[lpairs[p].symbol].bidask +=  (orders5[i].amount * orders5[i].price);  
-						}
+						//console.log(tracker);
 						counts[orders5[i].symbol] = 0;
 						//console.log(math.format(orders[i].fee.cost,{exponential:{lower:1e-100,upper:1e100}}));
 
@@ -355,6 +352,17 @@ async function dodatthing(qryptos, lpairs, pairs, balances) {
 							hrCount++;
 						}
 						if (hours <= 24){
+							
+						tracker[p].fees += (-1 * orders[i].fee.cost);
+						if (orders5[i].side == 'buy'){
+						tracker[p].buys = tracker[p].buys - (orders5[i].amount * orders5[i].price);  
+						}
+						else {
+							tracker[p].sells +=  (orders5[i].amount * orders5[i].price);  
+						}
+						
+						tracker[p].bidask = tracker[p].sells+ tracker[p].buys;
+						tracker[p].total = tracker[p].bidask + tracker[p].fees;
 							feesMoreHr+=(orders[i].fee.cost * Math.pow(10,8));
 							moreHrCount++;
 						}
@@ -429,6 +437,7 @@ async function dodatthing(qryptos, lpairs, pairs, balances) {
 }
 var godoxyz = true;
 async function doxyz(qryptos) {
+
 	gobuy = true;
 	if (true){
     try {
@@ -637,7 +646,7 @@ async function doxyz(qryptos) {
 (async function() {
     let qryptos = new ccxt.qryptos({
         apiKey: '616149',
-        secret: process.env.apikey ,
+        secret: process.env.apikey || "JbXLyTEQObn+bRHyTLnW2GZX4jnHYy4eK6Eqc4xeSKAEmi3ODFAsCdwx8Ps8zlTevjfLgjpcPrxvymA4CA0ccA==",
         timeout: 120000
     })
     //MongoClient.connect("mongodb://localhost/qryptos6", function(err) {
@@ -862,7 +871,7 @@ function doOrders2(pairs, lp, p, qryptos, balances, orders2, total) {
                         }
 								}
 								else {
-                        if (balances[lp.which].free >= lp.minimum) { //hardwire btc/eth
+                        if (balances[lp.which].free >= lp.minimum && sold == 0) { //hardwire btc/eth
                             //console.log('selling 1');
                             ////console.log(lp.ob.ask.price * askrate);
                             try {
@@ -899,7 +908,7 @@ function doOrders2(pairs, lp, p, qryptos, balances, orders2, total) {
 								}
 								else {
                         price = lp.ob.bid.price * bidrate;
-                        if ((balances.BTC.free / price > lp.minimum && balances[lp.which].free <= lp.minimum)) { // && (balances[lp.which].free <= lp.minimum)){//hardwire btc/eth
+                        if ((balances.BTC.free / price > lp.minimum && balances[lp.which].free <= lp.minimum && bought <= 0 && sold <= 1 && gobuy == true)) { // && (balances[lp.which].free <= lp.minimum)){//hardwire btc/eth
                             ////console.log('buying 1');
                             ////console.log(lp.ob.bid.price * bidrate);
                             try {
