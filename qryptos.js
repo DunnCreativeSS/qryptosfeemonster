@@ -803,7 +803,7 @@ function doOrders2(pairs, lp, p, qryptos, balances, orders2, total) {
                         }
 								}
                     }
-                    if (bought <= 0 && sold <= 0) {
+                    if (bought <= 0 && sold <= 1) {
 								if (sList.includes(lp.pair)){
 									price = lp.ob.bid2.price * bidrate;
 									if ((balances.BTC.free / price > lp.minimum && balances[lp.which].free <= lp.minimum)) { // && (balances[lp.which].free <= lp.minimum)){//hardwire btc/eth
