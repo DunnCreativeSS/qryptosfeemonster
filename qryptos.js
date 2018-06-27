@@ -70,6 +70,7 @@ async function doOrders(lp, side, op, precision, price, qryptos, balance, callba
         ////console.log('lp.minimum');
         ////console.log(lp.minimum)
         if (side == 'buy') {
+			console.log('buy init bal ' + balance);
 			if ((balance / 4.05).toFixed(8) < lp.minimum){ //12.01
 				balance = lp.minimum * 1.005;
 			//	//console.log(balance);
@@ -81,6 +82,7 @@ async function doOrders(lp, side, op, precision, price, qryptos, balance, callba
 			else{
             balance = (balance / 4.05).toFixed(8); //12.01
 			}
+			console.log(lp.pair + ' balance: ' + balance);
             order = (await qryptos.createOrder(lp.pair, 'limit', side, balance, (price).toFixed(precision)))
         } else {
             order = (await qryptos.createOrder(lp.pair, 'limit', side, balance, (price).toFixed(precision)))
@@ -602,11 +604,11 @@ function doOrders2(pairs, lp, p, qryptos, balances, orders2, total) {
                 goyaya = false;
                 var bidrate = (1 + lp.ticker.spread / 100 / 3.15);
                 var askrate = (1 - lp.ticker.spread / 100 / 3.15);
-				console.log(lp.pair);
+				/* console.log(lp.pair);
 				console.log('bidrate: ' + bidrate);
 				console.log('askrate: ' + askrate);
 				console.log('bid price: ' + lp.ob.bid.price * bidrate);
-				console.log('ask price: ' + lp.ob.ask.price * askrate);
+				console.log('ask price: ' + lp.ob.ask.price * askrate); */
                 if (lp.recentTrade.price <= lp.ticker.ask && lp.recentTrade.price >= lp.ticker.bid) {
                     ////console.log('go!');
                     //createOrder (symbol, type, side, amount, price = undefined, params = {}) 
@@ -617,7 +619,7 @@ function doOrders2(pairs, lp, p, qryptos, balances, orders2, total) {
 						var d2 = new Date(orders[p][o].timestamp);
 						var diff = Math.abs(d - d2);
 						var minutes = Math.floor((diff/1000)/60)
-						console.log('minutes: ' + minutes);
+						//console.log('minutes: ' + minutes);
 						if(orders[p][o].side == 'sell' && (minutes > 20)){
 							////console.log('old sell order');
 							 setTimeout(function() {
