@@ -70,8 +70,7 @@ async function dobalances(amount, divisor, lp, callback){
 		callback(amount);
 	}
 		dobalances(amount, divisor / 1.25, lp, callback);
-	}
-			
+	
 }
             app.listen(process.env.PORT || 8080, function() {});
 async function doOrders(lp, side, op, precision, price, qryptos, balance, callback) {
