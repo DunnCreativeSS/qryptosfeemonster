@@ -585,7 +585,7 @@ async function doxyz(qryptos) {
 
 var xyz = 0;
 
-function doOrders2(pairs, lp, p, qryptos, balances, orders2, total) {
+async function doOrders2(pairs, lp, p, qryptos, balances, orders2, total) {
 	
 			                let balances = await qryptos.fetchBalance();
     ////////console.log('doOrders');
