@@ -410,7 +410,9 @@ async function dodatthing(qryptos, lpairs, pairs, balances) {
 					counts[orders5[i].symbol]++;
 				}
 				if (counts[orders5[i].symbol] >= 3){
+					if (!sList.includes(orders5[i].symbol)){
 					sList.push(orders5[i].symbol);
+					}
 				}
 				orders5[i].fee = (orders5[i].fee.cost * Math.pow(10,8))
 				if (oCount <= 40){
