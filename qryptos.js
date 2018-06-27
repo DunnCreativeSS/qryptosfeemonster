@@ -1,6 +1,6 @@
 const ccxt = require('ccxt');
 var volThreshold = 3;
-var btc24VolThreshold = 1;
+var btc24VolThreshold = 0.01;
 var mult = 64;
 var startBtc =  0.00406720;
 var orders3 = [];
