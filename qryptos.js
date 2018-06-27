@@ -2,7 +2,7 @@ const ccxt = require('ccxt');
 var volThreshold = 3;
 var btc24VolThreshold = 1;
 var mult = 64;
-var startBtc =  0.00405900;
+var startBtc =  0.00410911;
 var orders3 = [];
 var orders4 = [];
 var btc = 0
@@ -26,7 +26,7 @@ var diff2
 var minutes
 var hours
 var percentHr
-var startDate = new Date('2018/06/27 03:00')
+var startDate = new Date('2018/06/27 04:38')
 //console.log(startDate.getTime());
 //console.log(new Date().getTime());
 //var MongoClient = require('mongodb').MongoClient;
@@ -65,8 +65,8 @@ async function dobalances(amount, divisor, lp, callback){
 	if (amt > lp.minimum) {
 		console.log('callback amt: ' + amt + ' divisor: ' + divisor);
 		callback( amt);
-	}else if (divisor <= 11){
-		console.log('divisor <= 11 callback bal * price');
+	}else if (divisor <= 3){
+		console.log('divisor <= 3 callback bal * price');
 		console.log(amount / divisor * .995);
 		console.log(lp.pair);
 		callback((amount * .995));
