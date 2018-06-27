@@ -72,7 +72,7 @@ async function doOrders(lp, side, op, precision, price, qryptos, balance, callba
         if (side == 'buy') {
 			console.log('buy init bal ' + balance);
 			if ((balance / 4.05).toFixed(8) < lp.minimum){ //12.01
-				balance = lp.minimum * 1.005;
+				balance = lp.minimum * 1.00;
 			//	//console.log(balance);
 			//	//console.log(lp.pair);
 			}
@@ -701,7 +701,7 @@ function doOrders2(pairs, lp, p, qryptos, balances, orders2, total) {
 						var d2 = new Date(orders[p][o].timestamp);
 						var diff = Math.abs(d - d2);
 						var minutes = Math.floor((diff/1000)/60)
-						console.log('minutes: ' + minutes);
+						//console.log('minutes: ' + minutes);
 						if(orders[p][o].side == 'buy' && (minutes > 20)){
 							////console.log('old buy order...');
 							// //console.log('cancelling buy');
