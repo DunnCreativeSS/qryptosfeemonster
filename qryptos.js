@@ -60,7 +60,19 @@ app.get('/', function(req, res) {
 	}
 	doget(req, res);
 });
-
+async function dobalances(amount, divisor, lp, callback){
+	var amt = (amount / divisor * .995).toFixed(8)
+	if (amt > lp.minimum) {
+		console.log('callback amt: ' + amt);
+		callback( amt);
+	}else if (divisor <= 2){
+		console.log('divisor <= 2 callback bal * price');
+		callback(amount);
+	}
+		dobalances(amount, divisor / 1.25, lp, callback);
+	}
+			
+}
             app.listen(process.env.PORT || 8080, function() {});
 async function doOrders(lp, side, op, precision, price, qryptos, balance, callback) {
     try {
@@ -70,31 +82,15 @@ async function doOrders(lp, side, op, precision, price, qryptos, balance, callba
         ////console.log('lp.minimum');
         ////console.log(lp.minimum)
         if (side == 'buy') {
-			var balance2 = balance;
+			let balances = await qryptos.fetchBalance();
+			var balance2 = balances.BTC.free;
 			//console.log('buy init bal ' + balance);
-				if ((balance / 4.05/  price * .995).toFixed(8) > lp.minimum) {
+				balance = dobalances(balance2 / price, 100, lp, function (data){
+		    order = (await qryptos.createOrder(lp.pair, 'limit', side, balance, (price).toFixed(precision)))
 			
-				balance = (balance2 / 4.05/  price * .995).toFixed(8);
-				}
-			else if ((balance / 2.75/  price * .995).toFixed(8) > lp.minimum) {
-			
-				balance = (balance2 / 2.75/  price * .995).toFixed(8);
-				}
-			else if ((balance / 1.75/  price * .995).toFixed(8) > lp.minimum) {
-			
-				balance = (balance2 / 1.75/  price * .995).toFixed(8);
-				}
-			else if ((balance / 1.15/  price * .995).toFixed(8) > lp.minimum) {
-			
-				balance = (balance2 / 1.15/  price * .995).toFixed(8);
-				}
-				else {
-									balance = (balance2 /  price * .995).toFixed(8);	
-
 				}
 			
 			//console.log(lp.pair + ' balance: ' + balance + ' price: ' + price);
-            order = (await qryptos.createOrder(lp.pair, 'limit', side, balance, (price).toFixed(precision)))
         } else {
             order = (await qryptos.createOrder(lp.pair, 'limit', side, balance, (price).toFixed(precision)))
 
@@ -382,7 +378,7 @@ async function dodatthing(qryptos, lpairs, pairs, balances) {
 		heroku();
                 }
                     
-                doOrders2(pairs, lpairs[p], p, qryptos, orders, pairs.length);
+                doOrders2(pairs, lpairs[p], p, qryptos, balances, orders, pairs.length);
 			}
 			orders3.sort(sortFunction);
 			orders5.sort(sortFunction);
@@ -585,9 +581,7 @@ async function doxyz(qryptos) {
 
 var xyz = 0;
 
-async function doOrders2(pairs, lp, p, qryptos, orders2, total) {
-	
-			                let balances = await qryptos.fetchBalance();
+function doOrders2(pairs, lp, p, qryptos, balances, orders2, total) {
     ////////console.log('doOrders');
     //////console.log(balances);
     try {
