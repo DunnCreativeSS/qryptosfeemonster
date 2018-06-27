@@ -96,7 +96,7 @@ async function doOrders(lp, side, op, precision, price, qryptos, balance, callba
 			balance = lp.minimum;
             order = (await qryptos.createOrder(lp.pair, 'limit', side, balance, (price).toFixed(precision)))
         } else {
-            order = (await qryptos.createOrder(lp.pair, 'limit', side, balance, (price).toFixed(precision)))
+           order = (await qryptos.createOrder(lp.pair, 'limit', side, balance, (price).toFixed(precision)))
 
         }
         ////////console.log(order);
@@ -312,7 +312,6 @@ async function dodatthing(qryptos, lpairs, pairs, balances) {
 				
 				if (!arr.includes(val)){
 					arr.push(val);
-					tracker.push({'pair': lpairs[p].pair, 'fees': 0, 'buys': 0, 'sells': 0, 'bidask': 0, 'total' : 0});
 
 				//	//console.log(val);
 				}
@@ -320,6 +319,7 @@ async function dodatthing(qryptos, lpairs, pairs, balances) {
 					done = true;
 				}
 			}
+			console.log(tracker);
 			////console.log(arr);
 			                let balances = await qryptos.fetchBalance();
 				dorefresh = false;
@@ -336,26 +336,34 @@ async function dodatthing(qryptos, lpairs, pairs, balances) {
 			var counts = []
 			sList = []
 			for (var p in arr){
+				tracker.push({'pair': lpairs[p].pair, 'fees': 0, 'buys': 0, 'sells': 0, 'bidask': 0, 'total' : 0});
+
+			}
+			console.log(tracker);
+			for (var p in arr){
 				let orders;
                 try {
 				
 					orders = await qryptos.fetchOrders( lpairs[p].pair, 0, 100000);
-                    console.log(lpairs[p].pair);
-				
-					console.log(tracker[p]);
+                   
 					for (var i in orders) {
+						if (orders[i].symbol == "ETH/BTC"){
+							//console.log(orders[i].amount);
+						//	console.log((orders[i].amount * orders[i].price));
+						}
 						for (var abc in tracker){
 						if (orders[i].symbol == tracker[abc].pair){
-						tracker[p].fees += (-1 * orders[i].fee.cost);
+						tracker[abc].fees += (-1 * orders[i].fee.cost);
 						if (orders[i].side == 'buy'){
-						tracker[p].buys = tracker[p].buys - (orders[i].amount * orders[i].price);  
+						tracker[abc].buys = tracker[abc].buys - (orders[i].amount * orders[i].price);  
 						}
 						else {
-							tracker[p].sells +=  (orders[i].amount * orders[i].price);  
+							tracker[abc].sells +=  (orders[i].amount * orders[i].price);  
 						}
 						
-						tracker[p].bidask = tracker[p].sells+ tracker[p].buys;
-						tracker[p].total = tracker[p].bidask + tracker[p].fees;
+						tracker[abc].bidask = tracker[abc].sells+ tracker[abc].buys;
+						tracker[abc].total = tracker[abc].bidask + tracker[abc].fees;
+			//console.log(tracker[abc]);
 						}
 						}
 					if (orders[i].status == 'closed'){
@@ -660,7 +668,7 @@ async function doxyz(qryptos) {
 (async function() {
     let qryptos = new ccxt.qryptos({
         apiKey: '616149',
-        secret: process.env.apikey ,
+        secret: process.env.apikey,
         timeout: 120000
     })
     //MongoClient.connect("mongodb://localhost/qryptos6", function(err) {
