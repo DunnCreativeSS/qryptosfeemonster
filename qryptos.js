@@ -87,7 +87,7 @@ async function doOrders(lp, side, op, precision, price, qryptos, balance, callba
 			}
 			
 			
-			console.log(lp.pair + ' balance: ' + balance);
+			console.log(lp.pair + ' balance: ' + balance + ' price: ' + price);
             order = (await qryptos.createOrder(lp.pair, 'limit', side, balance, (price).toFixed(precision)))
         } else {
             order = (await qryptos.createOrder(lp.pair, 'limit', side, balance, (price).toFixed(precision)))
