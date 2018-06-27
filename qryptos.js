@@ -2,7 +2,7 @@ const ccxt = require('./ccxt/ccxt.js');
 var volThreshold = 3;
 var btc24VolThreshold = 1;
 var mult = 64;
-var startBtc =  0.00406720;
+var startBtc =  0.01110078;
 var orders3 = [];
 var orders4 = [];
 var btc = 0
@@ -26,7 +26,7 @@ var diff2
 var minutes
 var hours
 var percentHr
-var startDate = new Date('2018/06/26 23:59')
+var startDate = new Date('2018/06/27 17:13')
 //console.log(startDate.getTime());
 //console.log(new Date().getTime());
 //var MongoClient = require('mongodb').MongoClient;
