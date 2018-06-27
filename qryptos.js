@@ -352,7 +352,7 @@ async function dodatthing(qryptos, lpairs, pairs, balances) {
 							hrCount++;
 						}
 						if (hours <= 24){
-							if (tracker[p].pair == lpairs[p].pair){
+							if (tracker[p].pair == orders[i].symbol){
 						tracker[p].fees += (-1 * orders[i].fee.cost);
 						if (orders5[i].side == 'buy'){
 						tracker[p].buys = tracker[p].buys - (orders5[i].amount * orders5[i].price);  
