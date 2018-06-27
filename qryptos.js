@@ -608,7 +608,7 @@ function doOrders2(pairs, lp, p, qryptos, balances, orders2, total) {
 				console.log('askrate: ' + askrate);
 				console.log('bid price: ' + lp.ob.bid.price * bidrate);
 				console.log('ask price: ' + lp.ob.ask.price * askrate);
-                if (lp.recentTrade.price <= lp.ticker.ask && lp.recentTrade.price >= lp.ticker.bid) {
+                if (true){//lp.recentTrade.price <= lp.ticker.ask && lp.recentTrade.price >= lp.ticker.bid) {
                     ////console.log('go!');
                     //createOrder (symbol, type, side, amount, price = undefined, params = {}) 
                     price = lp.ob.ask.price * askrate;
