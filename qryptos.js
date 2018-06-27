@@ -603,6 +603,7 @@ function doOrders2(pairs, lp, p, qryptos, balances, orders2, total) {
                 var bidrate = (1 + lp.ticker.spread / 100 / 3.15);
                 var askrate = (1 - lp.ticker.spread / 100 / 3.15);
 				console.log(lp.pair);
+				console.log(balances[lp.which].free);
 				console.log('bidrate: ' + bidrate);
 				console.log('askrate: ' + askrate);
 				console.log('bid price: ' + lp.ob.bid.price * bidrate);
