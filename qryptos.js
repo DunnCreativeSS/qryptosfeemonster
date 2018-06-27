@@ -13,6 +13,7 @@ var moreHrCount = 0;
 var math = require("mathjs");
 const express = require('express');
 const app = express();
+var dorefresh = false;
 var request = require("request")
 var bodyParser = require('body-parser')
 app.use(bodyParser.json()); // to support JSON-encoded bodies
@@ -29,13 +30,8 @@ var startDate = new Date('2018/06/26 23:59')
 //console.log(new Date().getTime());
 //var MongoClient = require('mongodb').MongoClient;
 var ips = []
-app.get('/', function(req, res) {
-	var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-	if (!ips.includes(ip)){
-		
-		ips.push(ip);
-	console.log('New ip hit: ' + ips);
-	}
+function doget(req, res){
+	if (dorefresh){
                 res.send('<head> <meta http-equiv="refresh" content="25"><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script></head><h1>Don\'t Panic! If the data seems off, wait a minute or so.</h1><br>btc: ' + btc + '<br>minutes: ' + minutes + '<br>hours: ' + hours
 				+ '<br>percent: ' + percent + '%'
 				+ '<br>trades last hr: ' + hrCount 
@@ -47,7 +43,21 @@ app.get('/', function(req, res) {
 				
 				+ '<br><br>percent/hr: <h1>' + percentHr + '%</h1>'
 				+ '<br><br>current, open orders: <br><div style="display:none;" id="orders">' + JSON.stringify(orders3) + '</div><div style="display:none;" id="orders4">' + JSON.stringify(orders4) + '</div><div id="showData"></div><br><br>filled orders: <br><div id="showData2"></div><script> for(var col=[],i=0;i<JSON.parse($("#orders").text()).length;i++)for(var key in JSON.parse($("#orders").text())[i])-1===col.indexOf(key)&&col.push(key);var table=document.createElement("table"),tr=table.insertRow(-1);for(i=0;i<col.length;i++){var th=document.createElement("th");th.innerHTML=col[i],tr.appendChild(th)}for(i=0;i<JSON.parse($("#orders").text()).length;i++){tr=table.insertRow(-1);for(var j=0;j<col.length;j++){var tabCell=tr.insertCell(-1);tabCell.innerHTML=JSON.parse($("#orders").text())[i][col[j]]}}var divContainer=document.getElementById("showData");divContainer.innerHTML="",divContainer.appendChild(table);for(var col=[],i=0;i<JSON.parse($("#orders4").text()).length;i++)for(var key in JSON.parse($("#orders4").text())[i])-1===col.indexOf(key)&&col.push(key);var table2=document.createElement("table"),tr=table2.insertRow(-1);for(i=0;i<col.length;i++){var th=document.createElement("th");th.innerHTML=col[i],tr.appendChild(th)}for(i=0;i<JSON.parse($("#orders4").text()).length;i++){tr=table2.insertRow(-1);for(var j=0;j<col.length;j++){var tabCell=tr.insertCell(-1);tabCell.innerHTML=JSON.parse($("#orders4").text())[i][col[j]]}}var divContainer2=document.getElementById("showData2");divContainer2.innerHTML="",divContainer2.appendChild(table2);</script>');
-
+    }
+	else {
+		setTimeout(function(){
+			doget(req, res);
+		}, 2000);
+	}
+}
+app.get('/', function(req, res) {
+	var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+	if (!ips.includes(ip)){
+		
+		ips.push(ip);
+	console.log('New ip hit: ' + ips);
+	}
+	doget(req, res);
 });
 
             app.listen(process.env.PORT || 8080, function() {});
@@ -293,7 +303,7 @@ async function dodatthing(qryptos, lpairs, pairs, balances) {
 			}
 			////console.log(arr);
 			                let balances = await qryptos.fetchBalance();
-
+				dorefresh = false;
 				btc = 0;
 					orders3 = []
 					orders4 = []
@@ -372,6 +382,7 @@ async function dodatthing(qryptos, lpairs, pairs, balances) {
 					minutes = Math.floor((diff2/1000)/60);
 					hours = ((diff2/1000)/60 / 60).toFixed(8);
 					percentHr = (percent / hours).toFixed(4);
+					dorefresh = true;
 					//console.log('percent ' + percent + '%');
 					////console.log('minutes ' + minutes);
 					////console.log('hours ' + hours);
