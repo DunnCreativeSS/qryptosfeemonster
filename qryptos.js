@@ -378,7 +378,7 @@ async function dodatthing(qryptos, lpairs, pairs, balances) {
 					counts[orders5[i].currency_pair_code]++;
 				}
 				if (counts[orders5[i].currency_pair_code] >= 3){
-					var string = orders5[i].currency_pair_code.substr(orders5[i].currency_pair_code	.length - 3);
+					var string = orders5[i].currency_pair_code.substr(orders5[i].currency_pair_code.length - 3);
 					var string2 = orders5[i].currency_pair_code.substr(0, orders5[i].currency_pair_code.indexOf(string)); 
 
 					sList.push(string2 + '/' + string);
