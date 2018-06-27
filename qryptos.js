@@ -5,6 +5,8 @@ var mult = 64;
 var startBtc =  0.00405900;
 var orders3 = [];
 var orders4 = [];
+var didBuy = false;
+var didSell = false;
 var btc = 0
 var feesHr = 0;
 var feesMoreHr = 0;
@@ -69,7 +71,7 @@ async function doOrders(lp, side, op, precision, price, qryptos, balance, callba
         //////console.log(side);
         ////console.log('lp.minimum');
         ////console.log(lp.minimum)
-        if (side == 'buy') {
+        if (side == 'buy' && didBuy == false) {
 			var balance2 = balance;
 			//console.log('buy init bal ' + balance);
 				if ((balance / 4.05/  price * .995).toFixed(8) > lp.minimum) {
@@ -88,10 +90,11 @@ async function doOrders(lp, side, op, precision, price, qryptos, balance, callba
 									balance = (balance2 /  price * .995).toFixed(8);	
 
 				}
-			
+			didBuy = true;
 			//console.log(lp.pair + ' balance: ' + balance + ' price: ' + price);
             order = (await qryptos.createOrder(lp.pair, 'limit', side, balance, (price).toFixed(precision)))
-        } else {
+        } else if (didSell == false){
+			didSell = true;
             order = (await qryptos.createOrder(lp.pair, 'limit', side, balance, (price).toFixed(precision)))
 
         }
@@ -421,6 +424,8 @@ async function dodatthing(qryptos, lpairs, pairs, balances) {
 }
 var godoxyz = true;
 async function doxyz(qryptos) {
+	didBuy = false;
+	didSell = false;
 	if (true){
     try {
 		godoxyz = false;
