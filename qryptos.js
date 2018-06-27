@@ -919,7 +919,9 @@ function doOrders2(pairs, lp, p, qryptos, balances, orders2, total) {
                         }
 								}
                     }
+					console.log(gobuy);
                     if (bought <= 0 && sold <= 1 && gobuy == true) {
+						console.log('buy!')
 						gobuy = false;
 								if (sList.includes(lp.pair)){
 									price = lp.ob.bid2.price * bidrate;
@@ -940,8 +942,8 @@ function doOrders2(pairs, lp, p, qryptos, balances, orders2, total) {
 								}
 								else {
                         price = lp.ob.bid.price * bidrate;
-                        if ((balances.BTC.free / price > lp.minimum && balances[lp.which].free <= lp.minimum && bought <= 0 && sold <= 1 && gobuy == true)) {
-gobuy = false;
+                        if ((balances.BTC.free / price > lp.minimum && balances[lp.which].free <= lp.minimum && bought <= 0 && sold <= 1)) {
+
 							// && (balances[lp.which].free <= lp.minimum)){//hardwire btc/eth
                             ////console.log('buying 1');
                             ////console.log(lp.ob.bid.price * bidrate);
