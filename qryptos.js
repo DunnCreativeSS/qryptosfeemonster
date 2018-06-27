@@ -62,10 +62,10 @@ function doget(req, res){
 				
 				+ '<h1>percent/24hr: ' + (percentHr * 24).toFixed(4) + '%</h1>'
 				+ '<h1>percent/hr: ' + percentHr + '%</h1>'
-				+ '<br>bought(1 hr) according to trackerdata in btc: ' + buytot 
-				+ '<br>sold (1 hr) according to trackerdatat in btc: ' + selltot
-				+ '<br>total (1 hr) according to trackerdata (who seems to be off) (sats): ' + tot * Math.pow(10,8)
-				+ '<br>trackerdata (1 hr):<br><div style="display:none;" id="orders">' + JSON.stringify(orders3) + '</div>'
+				+ '<br>bought(6 hrs) according to trackerdata in btc: ' + buytot 
+				+ '<br>sold (6 hrs) according to trackerdatat in btc: ' + selltot
+				+ '<br>total (6 hrs) according to trackerdata (who seems to be off) (sats): ' + tot * Math.pow(10,8)
+				+ '<br>trackerdata (6 hrs):<br><div style="display:none;" id="orders">' + JSON.stringify(orders3) + '</div>'
 				+ '<div style="display:none;" id="tracker">' + JSON.stringify((tracker)) + '</div><div id="trackerdata"></div>current, open orders: '
 				+ '<div style="display:none;" id="orders4">' + JSON.stringify(orders4) + '</div><div id="showData"></div><br><br>filled orders: <br><div id="showData2"></div><script>for(var col=[],i=0;i<JSON.parse($("#tracker").text()).length;i++)for(var key in JSON.parse($("#tracker").text())[i])-1===col.indexOf(key)&&col.push(key);var table3=document.createElement("table"),tr=table3.insertRow(-1);for(i=0;i<col.length;i++){var th=document.createElement("th");th.innerHTML=col[i],tr.appendChild(th)}for(i=0;i<JSON.parse($("#tracker").text()).length;i++){tr=table3.insertRow(-1);for(var j=0;j<col.length;j++){var tabCell=tr.insertCell(-1);tabCell.innerHTML=JSON.parse($("#tracker").text())[i][col[j]]}}var divContainer3 = document.getElementById("trackerdata");divContainer3.innerHTML = "", divContainer3.appendChild(table3); console.log(table3); for(var col=[],i=0;i<JSON.parse($("#orders").text()).length;i++)for(var key in JSON.parse($("#orders").text())[i])-1===col.indexOf(key)&&col.push(key);var table=document.createElement("table"),tr=table.insertRow(-1);for(i=0;i<col.length;i++){var th=document.createElement("th");th.innerHTML=col[i],tr.appendChild(th)}for(i=0;i<JSON.parse($("#orders").text()).length;i++){tr=table.insertRow(-1);for(var j=0;j<col.length;j++){var tabCell=tr.insertCell(-1);tabCell.innerHTML=JSON.parse($("#orders").text())[i][col[j]]}}var divContainer=document.getElementById("showData");divContainer.innerHTML="",divContainer.appendChild(table);for(var col=[],i=0;i<JSON.parse($("#orders4").text()).length;i++)for(var key in JSON.parse($("#orders4").text())[i])-1===col.indexOf(key)&&col.push(key);var table2=document.createElement("table"),tr=table2.insertRow(-1);for(i=0;i<col.length;i++){var th=document.createElement("th");th.innerHTML=col[i],tr.appendChild(th)}for(i=0;i<JSON.parse($("#orders4").text()).length;i++){tr=table2.insertRow(-1);for(var j=0;j<col.length;j++){var tabCell=tr.insertCell(-1);tabCell.innerHTML=JSON.parse($("#orders4").text())[i][col[j]]}}var divContainer2=document.getElementById("showData2");divContainer2.innerHTML="",divContainer2.appendChild(table2);</script>');
     }
@@ -375,7 +375,7 @@ async function dodatthing(qryptos, lpairs, pairs, balances) {
 						for (var abc in tracker){
 							var diff3 = Math.abs(new Date() - new Date(orders[i].timestamp));
 						hours = ((diff3/1000)/60 / 60).toFixed(8);
-						if (orders[i].symbol == tracker[abc].pair && hours <= 1){
+						if (orders[i].symbol == tracker[abc].pair && hours <= 6){
 						tracker[abc].fees += (-1 * orders[i].fee.cost);
 						if (orders[i].side == 'buy'){
 						tracker[abc].buys = tracker[abc].buys - (orders[i].amount * orders[i].price);  
