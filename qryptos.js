@@ -329,7 +329,7 @@ async function dodatthing(qryptos, lpairs, pairs, balances) {
 						
 						orders5.push(orders[i]);
 						
-						counts[orders5[i].info.currency_pair_code] = 0;
+						counts[orders5[i].symbol] = 0;
 						//console.log(math.format(orders[i].fee.cost,{exponential:{lower:1e-100,upper:1e100}}));
 
 
@@ -376,13 +376,10 @@ async function dodatthing(qryptos, lpairs, pairs, balances) {
 				var diff3 = Math.abs(new Date() - new Date(orders5[i].timestamp));
 				hours = ((diff3/1000)/60 / 60).toFixed(8);
 				if (hours <= 1){
-					counts[orders5[i].info.currency_pair_code]++;
+					counts[orders5[i].symbol]++;
 				}
-				if (counts[orders5[i].info.currency_pair_code] >= 3){
-					var string = orders5[i].info.currency_pair_code.substr(orders5[i].info.currency_pair_code.length - 3);
-					var string2 = orders5[i].info.currency_pair_code.substr(0, orders5[i].info.currency_pair_code.indexOf(string)); 
-
-					sList.push(string2 + '/' + string);
+				if (counts[orders5[i].symbol] >= 3){
+					sList.push(orders5[i].symbol);
 				}
 				orders5[i].fee = (orders5[i].fee.cost * Math.pow(10,8))
 				if (oCount <= 40){
