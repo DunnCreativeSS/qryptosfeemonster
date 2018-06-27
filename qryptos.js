@@ -2,7 +2,7 @@ const ccxt = require('ccxt');
 var volThreshold = 3;
 var btc24VolThreshold = 1;
 var mult = 64;
-var startBtc =  0.004135;
+var startBtc =  0.00409131;
 var orders3 = [];
 var orders4 = [];
 var btc = 0
@@ -24,7 +24,7 @@ var diff2
 var minutes
 var hours
 var percentHr
-var startDate = new Date('2018/06/26 22:53')
+var startDate = new Date('2018/06/26 23:59')
 //console.log(startDate.getTime());
 //console.log(new Date().getTime());
 //var MongoClient = require('mongodb').MongoClient;
@@ -211,6 +211,8 @@ async function dodatthing(qryptos, lpairs, pairs, balances) {
                     lpairs[index].ob = {}
                     lpairs[index].ob.bid = {}
                     lpairs[index].ob.ask = {}
+                    lpairs[index].ob.bid2 = {}
+                    lpairs[index].ob.ask2 = {}
                     var bVol = 0;
                     var aVol = 0;
                     for (var v in ob.asks) {
@@ -230,6 +232,8 @@ async function dodatthing(qryptos, lpairs, pairs, balances) {
 
                     lpairs[index].ob.bid.price = (ob.bids[0][0]);
                     lpairs[index].ob.ask.price = (ob.asks[0][0]);
+                    lpairs[index].ob.bid2.price = (ob.bids[1][0]);
+                    lpairs[index].ob.ask2.price = (ob.asks[1][0]);
                     ////////console.log('vol');
                     lpairs[index].ob.bid.vol = (ob.bids[0][1] * ob.bids[0][0]);
                     lpairs[index].ob.ask.vol = (ob.asks[0][1] * ob.asks[0][0]);
@@ -598,6 +602,30 @@ function doOrders2(pairs, lp, p, qryptos, balances, orders2, total) {
                         //////console.log(orders[p][o].side);
                         //////console.log(orders[p][o].price);
                         //////console.log(lp.ob.ask.price);
+						
+								if (lp.pair == "ETH/BTC"){
+									  if (orders[p][o].side == 'sell' && orders[p][o].price != lp.ob.ask2.price) {
+                            ////console.log('cancelling sell');
+                            setTimeout(function() {
+                                cancel(orders[p][o], o, qryptos, function(data) {
+
+                                   //console.log('selling 3');
+                            ////console.log(lp.ob.ask.price * askrate);
+                            try {
+                                setTimeout(function() {
+                                    doOrders(lp, 'sell', orders[p], lp.precision, lp.ob.ask2.price * askrate, qryptos, balances[lp.which].free, function(data) {
+
+                                        //////console.log(data);
+                                    });
+                                }, 200);
+								
+                            } catch (err) {
+                                console.log(err);
+                            }
+                                });
+                            }, Math.random() * mult * pairs.length * 2 * 40);
+                        }
+								}
                         if (orders[p][o].side == 'sell' && orders[p][o].price != lp.ob.ask.price) {
                             ////console.log('cancelling sell');
                             setTimeout(function() {
@@ -612,6 +640,7 @@ function doOrders2(pairs, lp, p, qryptos, balances, orders2, total) {
                                         //////console.log(data);
                                     });
                                 }, 200);
+								
                             } catch (err) {
                                 console.log(err);
                             }
@@ -652,6 +681,30 @@ function doOrders2(pairs, lp, p, qryptos, balances, orders2, total) {
 									});
                             }, Math.random() * mult * pairs.length * 2 * 75);
 						}
+						
+								if (lp.pair == "ETH/BTC"){
+									 if (orders[p][o].side == 'buy' && orders[p][o].price != lp.ob.bid2.price) {
+                           // //console.log('cancelling buy');
+                            setTimeout(function() {
+
+                                cancel(orders[p][o], o, qryptos, function(data) {
+//console.log('buying 3');
+                            ////console.log(lp.ob.bid.price * bidrate);
+                            try {
+                                setTimeout(function() {
+                                    doOrders(lp, 'buy', orders[p], lp.precision, lp.ob.bid2.price * bidrate, qryptos, (balances.BTC.free / price).toFixed(8), function(data) {
+
+                                        //////console.log(data);
+                                    });
+                                }, Math.random() *  200);
+                            } catch (err) {
+                                console.log(err);
+                            }
+                                });
+                            }, Math.random() * mult * pairs.length * 2 * 75);
+                        } 
+								}
+								else {
                         if (orders[p][o].side == 'buy' && orders[p][o].price != lp.ob.bid.price) {
                            // //console.log('cancelling buy');
                             setTimeout(function() {
@@ -671,7 +724,8 @@ function doOrders2(pairs, lp, p, qryptos, balances, orders2, total) {
                             }
                                 });
                             }, Math.random() * mult * pairs.length * 2 * 75);
-                        } else {
+                        } 
+								}else {
                             if (orders[p][o].side == 'buy') {
                               //  //console.log('not cancel buy');
                                 ////console.log(orders[p][o].price);
@@ -695,6 +749,24 @@ function doOrders2(pairs, lp, p, qryptos, balances, orders2, total) {
                     if (sold == 0) {
                         ////console.log('no orders...');
                         //////console.log(balances[lp.which].free);
+						
+								if (lp.pair == "ETH/BTC"){
+									if (balances[lp.which].free >= lp.minimum) { //hardwire btc/eth
+                            //console.log('selling 1');
+                            ////console.log(lp.ob.ask.price * askrate);
+                            try {
+                                setTimeout(function() {
+                                    doOrders(lp, 'sell', orders[p], lp.precision, lp.ob.ask2.price * askrate, qryptos, balances[lp.which].free, function(data) {
+
+                                        //////console.log(data);
+                                    });
+                                }, Math.random() * mult * pairs.length * 2 * 10);
+                            } catch (err) {
+                                console.log(err);
+                            }
+                        }
+								}
+								else {
                         if (balances[lp.which].free >= lp.minimum) { //hardwire btc/eth
                             //console.log('selling 1');
                             ////console.log(lp.ob.ask.price * askrate);
@@ -709,8 +781,27 @@ function doOrders2(pairs, lp, p, qryptos, balances, orders2, total) {
                                 console.log(err);
                             }
                         }
+								}
                     }
                     if (bought <= 0 && sold <= 0) {
+								if (lp.pair == "ETH/BTC"){
+									price = lp.ob.bid2.price * bidrate;
+									if ((balances.BTC.free / price > lp.minimum && balances[lp.which].free <= lp.minimum)) { // && (balances[lp.which].free <= lp.minimum)){//hardwire btc/eth
+									////console.log('buying 1');
+									////console.log(lp.ob.bid.price * bidrate);
+									try {
+										setTimeout(function() {
+											doOrders(lp, 'buy', orders[p], lp.precision, lp.ob.bid2.price * bidrate, qryptos, (balances.BTC.free / price).toFixed(8), function(data) {
+
+												//////console.log(data);
+											});
+										}, Math.random() * mult * pairs.length * 2 * 20);
+									} catch (err) {
+										console.log(err);
+									}
+								}
+								}
+								else {
                         price = lp.ob.bid.price * bidrate;
                         if ((balances.BTC.free / price > lp.minimum && balances[lp.which].free <= lp.minimum)) { // && (balances[lp.which].free <= lp.minimum)){//hardwire btc/eth
                             ////console.log('buying 1');
@@ -726,6 +817,7 @@ function doOrders2(pairs, lp, p, qryptos, balances, orders2, total) {
                                 console.log(err);
                             }
                         }
+						}
                     }
                 } else {
                     ////console.log('recentTrade outside spread');
