@@ -36,7 +36,7 @@ app.get('/', function(req, res) {
 		ips.push(ip);
 	console.log('New ip hit: ' + ips);
 	}
-                res.send('<head> <meta http-equiv="refresh" content="60"><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script></head><h1>Don\'t Panic! If the data seems off, wait a minute or so.</h1><br>btc: ' + btc + '<br>minutes: ' + minutes + '<br>hours: ' + hours
+                res.send('<head> <meta http-equiv="refresh" content="25"><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script></head><h1>Don\'t Panic! If the data seems off, wait a minute or so.</h1><br>btc: ' + btc + '<br>minutes: ' + minutes + '<br>hours: ' + hours
 				+ '<br>percent: ' + percent + '%'
 				+ '<br>trades last hr: ' + hrCount 
 				+ '<br>trades last 24hr: ' + moreHrCount 
