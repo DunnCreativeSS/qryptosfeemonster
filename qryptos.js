@@ -129,7 +129,7 @@ async function doOrders(lp, side, op, precision, price, qryptos, balance, callba
 			if (balance2 / 1.25 > lp.minimum){
 			doOrders(lp, side, op, precision, price, qryptos, (balance2 / 1.25), callback);
 			}else{
-			doOrders(lp, side, op, precision, price, qryptos, (lp.minimum), callback);
+			
 
 			}
 		}
