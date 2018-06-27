@@ -63,9 +63,9 @@ app.get('/', function(req, res) {
 async function dobalances(amount, divisor, lp, callback){
 	var amt = (amount / divisor * .995).toFixed(8)
 	if (amt > lp.minimum) {
-		console.log('callback amt: ' + amt);
+		console.log('callback amt: ' + amt + ' divisor: ' + divisor);
 		callback( amt);
-	}else if (divisor <= 1.2){
+	}else if (divisor <= 2){
 		console.log('divisor <= 2 callback bal * price');
 		callback((amount / divisor * .995));
 	} else {
