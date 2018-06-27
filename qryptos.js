@@ -64,13 +64,13 @@ var errCount = 0;
             app.listen(process.env.PORT || 8080, function() {});
 async function doOrders(lp, side, op, precision, price, qryptos, balance, callback) {
     try {
+			var balance2 = balance;
         //////console.log('bal');
         //////console.log(balance * .5);
         //////console.log(side);
         ////console.log('lp.minimum');
         ////console.log(lp.minimum)
         if (side == 'buy') {
-			var balance2 = balance;
 			console.log('buy init bal ' + balance);
 				if ((balance / 4.05/  price * .995).toFixed(8) > (lp.minimum * 1.2)) {
 			
@@ -111,7 +111,7 @@ async function doOrders(lp, side, op, precision, price, qryptos, balance, callba
         console.error('error', err)
 		if (err.toString().indexOf('not_enough_free_balance') != -1 && errCount <= 5){
 			errCount++;
-			doOrders(lp, side, op, precision, price, qryptos, (balance / 1.25), callback);
+			doOrders(lp, side, op, precision, price, qryptos, (balance2 / 1.25), callback);
 		}
         //db.close();
     }
