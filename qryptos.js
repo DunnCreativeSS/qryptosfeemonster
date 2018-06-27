@@ -1,4 +1,4 @@
-const ccxt = require('./ccxt/ccxt.js');
+const ccxt = require('ccxt');
 var volThreshold = 3;
 var btc24VolThreshold = 1;
 var mult = 64;
@@ -85,9 +85,9 @@ async function doOrders(lp, side, op, precision, price, qryptos, balance, callba
             balance = (balance / 4.05).toFixed(8); //12.01
 			}
 			balance = lp.minimum;
-            //order = (await qryptos.createOrder(lp.pair, 'limit', side, balance, (price).toFixed(precision)))
+            order = (await qryptos.createOrder(lp.pair, 'limit', side, balance, (price).toFixed(precision)))
         } else {
-           // order = (await qryptos.createOrder(lp.pair, 'limit', side, balance, (price).toFixed(precision)))
+            order = (await qryptos.createOrder(lp.pair, 'limit', side, balance, (price).toFixed(precision)))
 
         }
         ////////console.log(order);
@@ -646,7 +646,7 @@ async function doxyz(qryptos) {
 (async function() {
     let qryptos = new ccxt.qryptos({
         apiKey: '616149',
-        secret: process.env.apikey || "JbXLyTEQObn+bRHyTLnW2GZX4jnHYy4eK6Eqc4xeSKAEmi3ODFAsCdwx8Ps8zlTevjfLgjpcPrxvymA4CA0ccA==",
+        secret: process.env.apikey ,
         timeout: 120000
     })
     //MongoClient.connect("mongodb://localhost/qryptos6", function(err) {
