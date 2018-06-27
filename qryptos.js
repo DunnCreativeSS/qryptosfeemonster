@@ -355,7 +355,7 @@ async function dodatthing(qryptos, lpairs, pairs, balances) {
 			orders5.sort(sortFunction);
 			for (var i in orders5){
 				orders5[i].fee = (orders5[i].fee.cost * Math.pow(10,8))
-				if (oCount <= 15){
+				if (oCount <= 40){
 				oCount++;
 				orders4.push(orders5[i]);
 				}
