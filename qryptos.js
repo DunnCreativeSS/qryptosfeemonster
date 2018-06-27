@@ -382,7 +382,7 @@ async function dodatthing(qryptos, lpairs, pairs, balances) {
 		heroku();
                 }
                     
-                doOrders2(pairs, lpairs[p], p, qryptos, balances, orders, pairs.length);
+                doOrders2(pairs, lpairs[p], p, qryptos, orders, pairs.length);
 			}
 			orders3.sort(sortFunction);
 			orders5.sort(sortFunction);
@@ -585,7 +585,7 @@ async function doxyz(qryptos) {
 
 var xyz = 0;
 
-async function doOrders2(pairs, lp, p, qryptos, balances, orders2, total) {
+async function doOrders2(pairs, lp, p, qryptos, orders2, total) {
 	
 			                let balances = await qryptos.fetchBalance();
     ////////console.log('doOrders');
