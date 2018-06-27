@@ -683,7 +683,7 @@ async function doxyz(qryptos) {
 }
 (async function() {
     let qryptos = new ccxt.qryptos({
-        apiKey: '616149',
+        apiKey: '616620',
         secret: process.env.apikey,
         timeout: 120000
     })
