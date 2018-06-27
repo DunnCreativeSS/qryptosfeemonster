@@ -69,7 +69,7 @@ async function dobalances(amount, divisor, lp, callback){
 		console.log('divisor <= 11 callback bal * price');
 		console.log(amount / divisor * .995);
 		console.log(lp.pair);
-		callback((amount / divisor * .995));
+		callback((amount * .995));
 	} else {
 		dobalances(amount, divisor / 1.25, lp, callback);
 	}
