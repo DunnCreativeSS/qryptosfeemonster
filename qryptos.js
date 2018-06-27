@@ -80,6 +80,10 @@ async function doOrders(lp, side, op, precision, price, qryptos, balance, callba
 			
 				balance = (balance2 / 1.75/  price * .995).toFixed(8);
 				}
+			else if ((balance / 1.15/  price * .995).toFixed(8) > lp.minimum) {
+			
+				balance = (balance2 / 1.15/  price * .995).toFixed(8);
+				}
 				else {
 									balance = (balance2 /  price * .995).toFixed(8);	
 
