@@ -705,7 +705,7 @@ function doOrders2(pairs, lp, p, qryptos, balances, orders2, total) {
 						var diff = Math.abs(d - d2);
 						var minutes = Math.floor((diff/1000)/60)
 						//console.log('minutes: ' + minutes);
-						if(orders[p][o].side == 'buy' && (minutes > 9)){
+						if((minutes > 9)){
 							////console.log('old buy order...');
 							// //console.log('cancelling buy');
                             setTimeout(function() {
