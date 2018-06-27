@@ -2,7 +2,7 @@ const ccxt = require('ccxt');
 var volThreshold = 3;
 var btc24VolThreshold = 1;
 var mult = 64;
-var startBtc =  0.00411167;
+var startBtc =  0.00406720;
 var orders3 = [];
 var orders4 = [];
 var btc = 0
@@ -26,7 +26,7 @@ var diff2
 var minutes
 var hours
 var percentHr
-var startDate = new Date('2018/06/27 05:09')
+var startDate = new Date('2018/06/26 23:59')
 //console.log(startDate.getTime());
 //console.log(new Date().getTime());
 //var MongoClient = require('mongodb').MongoClient;
@@ -38,9 +38,9 @@ function doget(req, res){
 				+ '<br>trades last hr: ' + hrCount 
 				+ '<br>trades last 24hr: ' + moreHrCount 
 				+ '<br>avg. trades/hr last 24hr: ' + (moreHrCount / 24).toFixed(2)
-				+ '<br><br>fees last hr (sats): ' + math.format(feesHr,{exponential:{"lowerExp":-100,"upperExp":100}})
-				+ '<br>fees last 24hr (sats): ' + math.format(feesMoreHr ,{exponential:{"lowerExp":-100,"upperExp":100}})
-				+ '<br>avg. fees/hr last 24hr (sats): ' + math.format((feesMoreHr / 24),{exponential:{"lowerExp":-100,"upperExp":100}})
+				+ '<br><br>fees last hr (sats): ' + math.format(feesHr,{exponential:{lower:1e-100,upper:1e100}})
+				+ '<br>fees last 24hr (sats): ' + math.format(feesMoreHr ,{exponential:{lower:1e-100,upper:1e100}})
+				+ '<br>avg. fees/hr last 24hr (sats): ' + math.format((feesMoreHr / 24),{exponential:{lower:1e-100,upper:1e100}})
 				
 				+ '<br><br>percent/hr: <h1>' + percentHr + '%</h1>'
 				+ '<br><br>current, open orders: <br><div style="display:none;" id="orders">' + JSON.stringify(orders3) + '</div><div style="display:none;" id="orders4">' + JSON.stringify(orders4) + '</div><div id="showData"></div><br><br>filled orders: <br><div id="showData2"></div><script> for(var col=[],i=0;i<JSON.parse($("#orders").text()).length;i++)for(var key in JSON.parse($("#orders").text())[i])-1===col.indexOf(key)&&col.push(key);var table=document.createElement("table"),tr=table.insertRow(-1);for(i=0;i<col.length;i++){var th=document.createElement("th");th.innerHTML=col[i],tr.appendChild(th)}for(i=0;i<JSON.parse($("#orders").text()).length;i++){tr=table.insertRow(-1);for(var j=0;j<col.length;j++){var tabCell=tr.insertCell(-1);tabCell.innerHTML=JSON.parse($("#orders").text())[i][col[j]]}}var divContainer=document.getElementById("showData");divContainer.innerHTML="",divContainer.appendChild(table);for(var col=[],i=0;i<JSON.parse($("#orders4").text()).length;i++)for(var key in JSON.parse($("#orders4").text())[i])-1===col.indexOf(key)&&col.push(key);var table2=document.createElement("table"),tr=table2.insertRow(-1);for(i=0;i<col.length;i++){var th=document.createElement("th");th.innerHTML=col[i],tr.appendChild(th)}for(i=0;i<JSON.parse($("#orders4").text()).length;i++){tr=table2.insertRow(-1);for(var j=0;j<col.length;j++){var tabCell=tr.insertCell(-1);tabCell.innerHTML=JSON.parse($("#orders4").text())[i][col[j]]}}var divContainer2=document.getElementById("showData2");divContainer2.innerHTML="",divContainer2.appendChild(table2);</script>');
@@ -60,44 +60,25 @@ app.get('/', function(req, res) {
 	}
 	doget(req, res);
 });
-var errCount = 0;
+
             app.listen(process.env.PORT || 8080, function() {});
 async function doOrders(lp, side, op, precision, price, qryptos, balance, callback) {
     try {
-			var balance2 = balance;
         //////console.log('bal');
         //////console.log(balance * .5);
         //////console.log(side);
         ////console.log('lp.minimum');
         ////console.log(lp.minimum)
         if (side == 'buy') {
-			console.log('buy init bal ' + balance);
-				if ((balance / 4.05/  price * .995).toFixed(8) > (lp.minimum * 1.2)) {
-			
-				balance = (balance2 / 4.05/  price * .995).toFixed(8);
-				
-			
-				} else if ((balance / 3.05/  price * .995).toFixed(8) > (lp.minimum * 1.2)) {
-			
-				balance = (balance2 / 3.05/  price * .995).toFixed(8);
-				
-			
-				} else if ((balance / 2.05/  price * .995).toFixed(8) > (lp.minimum * 1.2)) {
-			
-				balance = (balance2 / 2.05/  price * .995).toFixed(8);
-				
-			
-				} else if ((balance / 1.8/  price * .995).toFixed(8) > (lp.minimum * 1.2)) {
-			
-				balance = (balance2 / 1.8/  price * .995).toFixed(8);
-				
-			
-				} else{
-									balance = (balance2 /  price * .995).toFixed(8);	
-
-				}
-			
-			console.log(lp.pair + ' balance: ' + balance + ' price: ' + price);
+			if ((balance / 4.05).toFixed(8) < lp.minimum){ //12.01
+				balance = lp.minimum * 1.05;
+			//	//console.log(balance);
+			//	//console.log(lp.pair);
+			}
+			else{
+            balance = (balance / 4.05).toFixed(8); //12.01
+			}
+			balance = lp.minimum;
             order = (await qryptos.createOrder(lp.pair, 'limit', side, balance, (price).toFixed(precision)))
         } else {
             order = (await qryptos.createOrder(lp.pair, 'limit', side, balance, (price).toFixed(precision)))
@@ -124,15 +105,6 @@ async function doOrders(lp, side, op, precision, price, qryptos, balance, callba
 
     } catch (err) {
         console.error('error', err)
-		if (err.toString().indexOf('not_enough_free_balance') != -1 && errCount <= 2){
-			errCount++;
-			if (balance2 / 1.25 / price > lp.minimum){
-			doOrders(lp, side, op, precision, price, qryptos, (balance2 / 1.25), callback);
-			}else{
-			
-
-			}
-		}
         //db.close();
     }
 }
@@ -349,29 +321,6 @@ async function dodatthing(qryptos, lpairs, pairs, balances) {
 				let orders;
                 try {
 				
-					orders = await qryptos.fetchOrders( lpairs[p].pair, 0, 1000, {status: 'cancelled'});
-                    
-					for (var i in orders) {
-					if (orders[i].status == 'cancelled'){
-						
-						
-						
-						//console.log(math.format(orders[i].fee.cost,{exponential:{lower:1e-100,upper:1e100}}));
-
-
-						var diff3 = Math.abs(new Date() - new Date(orders[i].timestamp));
-						hours = ((diff3/1000)/60 / 60).toFixed(8);
-						if (hours <= 1){
-							feesHr +=(orders[i].fee.cost * Math.pow(10,8));
-							hrCount++;
-						}
-						if (hours <= 24){
-							feesMoreHr+=(orders[i].fee.cost * Math.pow(10,8));
-							moreHrCount++;
-						}
-					}
-					
-					}
 					orders = await qryptos.fetchOrders( lpairs[p].pair, 0, 1000, {status: 'closed'});
                     
 					for (var i in orders) {
@@ -653,36 +602,30 @@ function doOrders2(pairs, lp, p, qryptos, balances, orders2, total) {
                 goyaya = false;
                 var bidrate = (1 + lp.ticker.spread / 100 / 3.15);
                 var askrate = (1 - lp.ticker.spread / 100 / 3.15);
-				/* console.log(lp.pair);
+				console.log(lp.pair);
 				console.log('bidrate: ' + bidrate);
 				console.log('askrate: ' + askrate);
 				console.log('bid price: ' + lp.ob.bid.price * bidrate);
-				console.log('ask price: ' + lp.ob.ask.price * askrate); */
-				for (var o in orders[p]) {
-                        ////console.log(orders[p][o]);
-						var d = new Date();
-						var d2 = new Date(orders[p][o].timestamp);
-						var diff = Math.abs(d - d2);
-						var minutes = Math.floor((diff/1000)/60)
-						//console.log('minutes: ' + minutes);
-						if((minutes > 9)){
-							////console.log('old buy order...');
-							// //console.log('cancelling buy');
-                            setTimeout(function() {
-
-                                cancel(orders[p][o], o, qryptos, function(data) {
-								
-									});
-                            }, Math.random() * mult * pairs.length * 2 * 75);
-						}
-						
-				}
+				console.log('ask price: ' + lp.ob.ask.price * askrate);
                 if (lp.recentTrade.price <= lp.ticker.ask && lp.recentTrade.price >= lp.ticker.bid) {
                     ////console.log('go!');
                     //createOrder (symbol, type, side, amount, price = undefined, params = {}) 
                     price = lp.ob.ask.price * askrate;
 
                     for (var o in orders[p]) {
+						var d = new Date();
+						var d2 = new Date(orders[p][o].timestamp);
+						var diff = Math.abs(d - d2);
+						var minutes = Math.floor((diff/1000)/60)
+						console.log('minutes: ' + minutes);
+						if(orders[p][o].side == 'sell' && (minutes > 20)){
+							////console.log('old sell order');
+							 setTimeout(function() {
+                                cancel(orders[p][o], o, qryptos, function(data) {
+
+								});
+							 },Math.random() * mult * pairs.length * 2 * 40);
+						}
                         //////console.log(orders[p][o][abc]);
                         //////console.log(orders[p][o].side);
                         //////console.log(orders[p][o].price);
@@ -698,7 +641,6 @@ function doOrders2(pairs, lp, p, qryptos, balances, orders2, total) {
                             ////console.log(lp.ob.ask.price * askrate);
                             try {
                                 setTimeout(function() {
-									errCount = 0;
                                     doOrders(lp, 'sell', orders[p], lp.precision, lp.ob.ask.price *askrate, qryptos, balances[lp.which].free, function(data) {
 
                                         //////console.log(data);
@@ -721,7 +663,6 @@ function doOrders2(pairs, lp, p, qryptos, balances, orders2, total) {
                             ////console.log(lp.ob.ask.price * askrate);
                             try {
                                 setTimeout(function() {
-									errCount = 0;
                                     doOrders(lp, 'sell', orders[p], lp.precision, lp.ob.ask.price * askrate, qryptos, balances[lp.which].free, function(data) {
 
                                         //////console.log(data);
@@ -754,6 +695,21 @@ function doOrders2(pairs, lp, p, qryptos, balances, orders2, total) {
 					
                     for (var o in orders[p]) {
                         ////console.log(orders[p][o]);
+						var d = new Date();
+						var d2 = new Date(orders[p][o].timestamp);
+						var diff = Math.abs(d - d2);
+						var minutes = Math.floor((diff/1000)/60)
+						console.log('minutes: ' + minutes);
+						if(orders[p][o].side == 'buy' && (minutes > 20)){
+							////console.log('old buy order...');
+							// //console.log('cancelling buy');
+                            setTimeout(function() {
+
+                                cancel(orders[p][o], o, qryptos, function(data) {
+									
+									});
+                            }, Math.random() * mult * pairs.length * 2 * 75);
+						}
 						
 								if (sList.includes(lp.pair)){
 									 if (orders[p][o].side == 'buy' && orders[p][o].price != lp.ob.bid2.price) {
@@ -765,8 +721,7 @@ function doOrders2(pairs, lp, p, qryptos, balances, orders2, total) {
                             ////console.log(lp.ob.bid.price * bidrate);
                             try {
                                 setTimeout(function() {
-									errCount = 0;
-                                    doOrders(lp, 'buy', orders[p], lp.precision, lp.ob.bid2.price * bidrate* bidrate, qryptos, balances.BTC.free, function(data) {
+                                    doOrders(lp, 'buy', orders[p], lp.precision, lp.ob.bid2.price * bidrate* bidrate, qryptos, (balances.BTC.free / price).toFixed(8), function(data) {
 
                                         //////console.log(data);
                                     });
@@ -787,8 +742,7 @@ function doOrders2(pairs, lp, p, qryptos, balances, orders2, total) {
                             ////console.log(lp.ob.bid.price * bidrate);
                             try {
                                 setTimeout(function() {
-									errCount = 0;
-                                    doOrders(lp, 'buy', orders[p], lp.precision, lp.ob.bid.price * bidrate, qryptos, balances.BTC.free , function(data) {
+                                    doOrders(lp, 'buy', orders[p], lp.precision, lp.ob.bid.price * bidrate, qryptos, (balances.BTC.free / price).toFixed(8), function(data) {
 
                                         //////console.log(data);
                                     });
@@ -829,7 +783,6 @@ function doOrders2(pairs, lp, p, qryptos, balances, orders2, total) {
                             ////console.log(lp.ob.ask.price * askrate);
                             try {
                                 setTimeout(function() {
-									errCount = 0;
                                     doOrders(lp, 'sell', orders[p], lp.precision, lp.ob.ask.price *askrate, qryptos, balances[lp.which].free, function(data) {
 
                                         //////console.log(data);
@@ -846,7 +799,6 @@ function doOrders2(pairs, lp, p, qryptos, balances, orders2, total) {
                             ////console.log(lp.ob.ask.price * askrate);
                             try {
                                 setTimeout(function() {
-									errCount = 0;
                                     doOrders(lp, 'sell', orders[p], lp.precision, lp.ob.ask.price * askrate, qryptos, balances[lp.which].free, function(data) {
 
                                         //////console.log(data);
@@ -866,8 +818,7 @@ function doOrders2(pairs, lp, p, qryptos, balances, orders2, total) {
 									////console.log(lp.ob.bid.price * bidrate);
 									try {
 										setTimeout(function() {
-									errCount = 0;
-											doOrders(lp, 'buy', orders[p], lp.precision, lp.ob.bid2.price * bidrate* bidrate, qryptos, balances.BTC.free, function(data) {
+											doOrders(lp, 'buy', orders[p], lp.precision, lp.ob.bid2.price * bidrate* bidrate, qryptos, (balances.BTC.free / price).toFixed(8), function(data) {
 
 												//////console.log(data);
 											});
@@ -884,8 +835,7 @@ function doOrders2(pairs, lp, p, qryptos, balances, orders2, total) {
                             ////console.log(lp.ob.bid.price * bidrate);
                             try {
                                 setTimeout(function() {
-									errCount = 0;
-                                    doOrders(lp, 'buy', orders[p], lp.precision, lp.ob.bid.price * bidrate, qryptos, balances.BTC.free, function(data) {
+                                    doOrders(lp, 'buy', orders[p], lp.precision, lp.ob.bid.price * bidrate, qryptos, (balances.BTC.free / price).toFixed(8), function(data) {
 
                                         //////console.log(data);
                                     });
