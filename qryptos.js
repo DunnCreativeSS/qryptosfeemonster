@@ -2,7 +2,7 @@ const ccxt = require('ccxt');
 var volThreshold = 3;
 var btc24VolThreshold = 1;
 var mult = 64;
-var startBtc =  0.00410911;
+var startBtc =  0.00405900;
 var orders3 = [];
 var orders4 = [];
 var btc = 0
@@ -26,14 +26,14 @@ var diff2
 var minutes
 var hours
 var percentHr
-var startDate = new Date('2018/06/27 04:38')
+var startDate = new Date('2018/06/27 03:00')
 //console.log(startDate.getTime());
 //console.log(new Date().getTime());
 //var MongoClient = require('mongodb').MongoClient;
 var ips = []
 function doget(req, res){
 	if (dorefresh){
-                res.send('<head> <meta http-equiv="refresh" content="65"><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script></head><h1>Don\'t Panic! If the data seems off, wait a minute or so.</h1><br>btc: ' + btc + '<br>minutes: ' + minutes + '<br>hours: ' + hours
+                res.send('<head> <meta http-equiv="refresh" content="25"><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script></head><h1>Don\'t Panic! If the data seems off, wait a minute or so.</h1><br>btc: ' + btc + '<br>minutes: ' + minutes + '<br>hours: ' + hours
 				+ '<br>percent: ' + percent + '%'
 				+ '<br>trades last hr: ' + hrCount 
 				+ '<br>trades last 24hr: ' + moreHrCount 
@@ -60,21 +60,7 @@ app.get('/', function(req, res) {
 	}
 	doget(req, res);
 });
-async function dobalances(amount, divisor, lp, callback){
-	var amt = (amount / divisor * .995).toFixed(8)
-	if (amt > lp.minimum) {
-		console.log('callback amt: ' + amt + ' divisor: ' + divisor);
-		callback( amt);
-	}else if (divisor <= 1.5){
-		console.log('divisor ' + divisor + ' callback bal * price');
-		console.log(amount / divisor * .995);
-		console.log(lp.pair);
-		callback((amount * .995));
-	} else {
-		dobalances(amount, divisor / 1.25, lp, callback);
-	}
-	
-}
+
             app.listen(process.env.PORT || 8080, function() {});
 async function doOrders(lp, side, op, precision, price, qryptos, balance, callback) {
     try {
@@ -84,15 +70,25 @@ async function doOrders(lp, side, op, precision, price, qryptos, balance, callba
         ////console.log('lp.minimum');
         ////console.log(lp.minimum)
         if (side == 'buy') {
-			let balances = await qryptos.fetchBalance();
-			var balance2 = balances.BTC.free;
+			var balance2 = balance;
+			let balances = await qryptos.fetchBalance()
+			balance = balances.BTC.free;
+			balance2 = balance;
 			//console.log('buy init bal ' + balance);
-				dobalances(balance2 / price, 20, lp, async function (data){
-		    order = (await qryptos.createOrder(lp.pair, 'limit', side, data, (price).toFixed(precision)))
+				if ((balance / 4.05/  price * .995).toFixed(8) > lp.minimum) {
 			
-				});	
+				balance = (balance2 / 4.05/  price * .995).toFixed(8);
+				}
+				else if ((balance / 2.05/  price * .995).toFixed(8) > lp.minimum) {
 			
-			//console.log(lp.pair + ' balance: ' + balance + ' price: ' + price);z
+				balance = (balance2 / 2.05/  price * .995).toFixed(8);
+				} else {
+									balance = (balance2 /  price * .995).toFixed(8);	
+
+				}
+			
+			//console.log(lp.pair + ' balance: ' + balance + ' price: ' + price);
+            order = (await qryptos.createOrder(lp.pair, 'limit', side, balance, (price).toFixed(precision)))
         } else {
             order = (await qryptos.createOrder(lp.pair, 'limit', side, balance, (price).toFixed(precision)))
 
@@ -569,7 +565,7 @@ async function doxyz(qryptos) {
 }
 (async function() {
     let qryptos = new ccxt.qryptos({
-        apiKey: '616149',
+        apiKey: '616121',
         secret: process.env.apikey,
         timeout: 120000
     })
@@ -876,7 +872,7 @@ function doOrders2(pairs, lp, p, qryptos, balances, orders2, total) {
                    //	 //console.log('settimeout');
                     setTimeout(function() {
                         doxyz(qryptos)
-                    }, 60000);
+                    }, 30000);
                 }
             }
         } catch (err) {
