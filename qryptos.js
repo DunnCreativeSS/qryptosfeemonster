@@ -1,6 +1,6 @@
 const ccxt = require('ccxt');
 var volThreshold = 3;
-var btc24VolThreshold = 1;
+var btc24VolThreshold = 0.01;
 var mult = 64;
 var startBtc = 0.01108034;
 var orders3 = [];
@@ -91,7 +91,12 @@ async function doOrders(lp, side, op, precision, price, qryptos, balance, btcfre
         ////console.log('lp.minimum');
         ////console.log(lp.minimum)
         if (side == 'buy') {
-			if ((balance / 8.05).toFixed(8) > lp.minimum){ //12.01
+			if ((balance / 12.05).toFixed(8) > lp.minimum){ //12.01
+				balance = balance / 12.05;
+			//	//console.log(balance);
+			//	//console.log(lp.pair);
+			} 
+			else if ((balance / 8.05).toFixed(8) > lp.minimum){ //12.01
 				balance = balance / 8.05;
 			//	//console.log(balance);
 			//	//console.log(lp.pair);
