@@ -741,7 +741,7 @@ function doOrders2(pairs, lp, p, qryptos, balances, orders2, total) {
 						var diff = Math.abs(d - d2);
 						var minutes = Math.floor((diff/1000)/60)
 						console.log('minutes: ' + minutes);
-						if((minutes > 5)){
+						if((minutes > 25)){
 							////console.log('old sell order');
 							 setTimeout(function() {
                                 cancel(orders[p][o], o, qryptos, function(data) {
