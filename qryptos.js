@@ -19,7 +19,7 @@ var request = require("request")
 var bodyParser = require('body-parser')
 app.use(bodyParser.json()); // to support JSON-encoded bodies
 var sList = []
-var gobuy = true;
+var gobuy = [];
 app.use(bodyParser.urlencoded({ // to support URL-encoded bodies
     extended: true
 }));
@@ -221,6 +221,7 @@ async function dodatthing(qryptos, lpairs, pairs, balances) {
                 //////console.log(balances.BTC.free);//hardwire btc/eth
                 lpairs[index] = {}
                 lpairs[index].which = pairs[p].which
+				gobuy[pairs[p].pair] = true;
                 lpairs[index].minimum = pairs[p].minimum
                 lpairs[index].precision = pairs[p].precision
                 lpairs[index].pair = (pairs[p].pair);
@@ -469,8 +470,9 @@ async function dodatthing(qryptos, lpairs, pairs, balances) {
 }
 var godoxyz = true;
 async function doxyz(qryptos) {
-
-	gobuy = true;
+	for (var go in gobuy){
+	gobuy[go] = true;
+	}
 	if (true){
     try {
 		godoxyz = false;
@@ -919,10 +921,10 @@ function doOrders2(pairs, lp, p, qryptos, balances, orders2, total) {
                         }
 								}
                     }
-					console.log(gobuy);
-                    if (bought <= 0 && sold <= 1 && gobuy == true) {
+					console.log(gobuy[lpairs[p].pair]);
+                    if (bought <= 0 && sold <= 1 && gobuy[lpairs[p].pair] == true) {
 						console.log('buy!')
-						gobuy = false;
+						gobuy[lpairs[p].pair] = false;
 								if (sList.includes(lp.pair)){
 									price = lp.ob.bid2.price * bidrate;
 									if ((balances.BTC.free / price > lp.minimum && balances[lp.which].free <= lp.minimum)) { // && (balances[lp.which].free <= lp.minimum)){//hardwire btc/eth
