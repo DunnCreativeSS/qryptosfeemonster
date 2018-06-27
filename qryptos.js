@@ -18,6 +18,7 @@ var request = require("request")
 var bodyParser = require('body-parser')
 app.use(bodyParser.json()); // to support JSON-encoded bodies
 var sList = []
+var gobuy = true;
 app.use(bodyParser.urlencoded({ // to support URL-encoded bodies
     extended: true
 }));
@@ -415,6 +416,7 @@ async function dodatthing(qryptos, lpairs, pairs, balances) {
 }
 var godoxyz = true;
 async function doxyz(qryptos) {
+	gobuy = true;
 	if (true){
     try {
 		godoxyz = false;
@@ -863,7 +865,8 @@ function doOrders2(pairs, lp, p, qryptos, balances, orders2, total) {
                         }
 								}
                     }
-                    if (bought <= 0 && sold <= 1) {
+                    if (bought <= 0 && sold <= 1 && gobuy == true) {
+						gobuy = false;
 								if (sList.includes(lp.pair)){
 									price = lp.ob.bid2.price * bidrate;
 									if ((balances.BTC.free / price > lp.minimum && balances[lp.which].free <= lp.minimum)) { // && (balances[lp.which].free <= lp.minimum)){//hardwire btc/eth
