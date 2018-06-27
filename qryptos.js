@@ -124,9 +124,14 @@ async function doOrders(lp, side, op, precision, price, qryptos, balance, callba
 
     } catch (err) {
         console.error('error', err)
-		if (err.toString().indexOf('not_enough_free_balance') != -1 && errCount <= 5){
+		if (err.toString().indexOf('not_enough_free_balance') != -1 && errCount <= 2){
 			errCount++;
+			if (balance2 / 1.25 > lp.minimum){
 			doOrders(lp, side, op, precision, price, qryptos, (balance2 / 1.25), callback);
+			}else{
+			doOrders(lp, side, op, precision, price, qryptos, (lp.minimum), callback);
+
+			}
 		}
         //db.close();
     }
