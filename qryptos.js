@@ -312,6 +312,8 @@ async function dodatthing(qryptos, lpairs, pairs, balances) {
 				
 				if (!arr.includes(val)){
 					arr.push(val);
+					tracker.push({'pair': lpairs[p].pair, 'fees': 0, 'buys': 0, 'sells': 0, 'bidask': 0, 'total' : 0});
+
 				//	//console.log(val);
 				}
 				if (arr.length == Object.keys(lpairs).length){
@@ -334,17 +336,16 @@ async function dodatthing(qryptos, lpairs, pairs, balances) {
 			var counts = []
 			sList = []
 			for (var p in arr){
-				
 				let orders;
                 try {
 				
 					orders = await qryptos.fetchOrders( lpairs[p].pair, 0, 100000);
                     console.log(lpairs[p].pair);
-					tracker[p] = ({'pair': lpairs[p].pair, 'fees': 0, 'buys': 0, 'sells': 0, 'bidask': 0, 'total' : 0});
 				
 					console.log(tracker[p]);
 					for (var i in orders) {
-						
+						for (var abc in tracker){
+						if (orders[i].symbol == tracker[abc].pair){
 						tracker[p].fees += (-1 * orders[i].fee.cost);
 						if (orders[i].side == 'buy'){
 						tracker[p].buys = tracker[p].buys - (orders[i].amount * orders[i].price);  
@@ -355,7 +356,8 @@ async function dodatthing(qryptos, lpairs, pairs, balances) {
 						
 						tracker[p].bidask = tracker[p].sells+ tracker[p].buys;
 						tracker[p].total = tracker[p].bidask + tracker[p].fees;
-							
+						}
+						}
 					if (orders[i].status == 'closed'){
 						
 						
