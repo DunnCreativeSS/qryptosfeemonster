@@ -38,9 +38,9 @@ function doget(req, res){
 				+ '<br>trades last hr: ' + hrCount 
 				+ '<br>trades last 24hr: ' + moreHrCount 
 				+ '<br>avg. trades/hr last 24hr: ' + (moreHrCount / 24).toFixed(2)
-				+ '<br><br>fees last hr (sats): ' + math.format(feesHr,{exponential:{lower:1e-100,upper:1e100}})
-				+ '<br>fees last 24hr (sats): ' + math.format(feesMoreHr ,{exponential:{lower:1e-100,upper:1e100}})
-				+ '<br>avg. fees/hr last 24hr (sats): ' + math.format((feesMoreHr / 24),{exponential:{lower:1e-100,upper:1e100}})
+				+ '<br><br>fees last hr (sats): ' + math.format(feesHr,{exponential:{"lowerExp":-100,"upperExp":100}})
+				+ '<br>fees last 24hr (sats): ' + math.format(feesMoreHr ,{exponential:{"lowerExp":-100,"upperExp":100}})
+				+ '<br>avg. fees/hr last 24hr (sats): ' + math.format((feesMoreHr / 24),{exponential:{"lowerExp":-100,"upperExp":100}})
 				
 				+ '<br><br>percent/hr: <h1>' + percentHr + '%</h1>'
 				+ '<br><br>current, open orders: <br><div style="display:none;" id="orders">' + JSON.stringify(orders3) + '</div><div style="display:none;" id="orders4">' + JSON.stringify(orders4) + '</div><div id="showData"></div><br><br>filled orders: <br><div id="showData2"></div><script> for(var col=[],i=0;i<JSON.parse($("#orders").text()).length;i++)for(var key in JSON.parse($("#orders").text())[i])-1===col.indexOf(key)&&col.push(key);var table=document.createElement("table"),tr=table.insertRow(-1);for(i=0;i<col.length;i++){var th=document.createElement("th");th.innerHTML=col[i],tr.appendChild(th)}for(i=0;i<JSON.parse($("#orders").text()).length;i++){tr=table.insertRow(-1);for(var j=0;j<col.length;j++){var tabCell=tr.insertCell(-1);tabCell.innerHTML=JSON.parse($("#orders").text())[i][col[j]]}}var divContainer=document.getElementById("showData");divContainer.innerHTML="",divContainer.appendChild(table);for(var col=[],i=0;i<JSON.parse($("#orders4").text()).length;i++)for(var key in JSON.parse($("#orders4").text())[i])-1===col.indexOf(key)&&col.push(key);var table2=document.createElement("table"),tr=table2.insertRow(-1);for(i=0;i<col.length;i++){var th=document.createElement("th");th.innerHTML=col[i],tr.appendChild(th)}for(i=0;i<JSON.parse($("#orders4").text()).length;i++){tr=table2.insertRow(-1);for(var j=0;j<col.length;j++){var tabCell=tr.insertCell(-1);tabCell.innerHTML=JSON.parse($("#orders4").text())[i][col[j]]}}var divContainer2=document.getElementById("showData2");divContainer2.innerHTML="",divContainer2.appendChild(table2);</script>');
@@ -71,7 +71,7 @@ async function doOrders(lp, side, op, precision, price, qryptos, balance, callba
         ////console.log(lp.minimum)
         if (side == 'buy') {
 			var balance2 = balance;
-			console.log('buy init bal ' + balance);
+			//console.log('buy init bal ' + balance);
 				if ((balance / 4.05/  price * .995).toFixed(8) > lp.minimum) {
 			
 				balance = (balance2 / 4.05/  price * .995).toFixed(8);
@@ -85,7 +85,7 @@ async function doOrders(lp, side, op, precision, price, qryptos, balance, callba
 
 				}
 			
-			console.log(lp.pair + ' balance: ' + balance + ' price: ' + price);
+			//console.log(lp.pair + ' balance: ' + balance + ' price: ' + price);
             order = (await qryptos.createOrder(lp.pair, 'limit', side, balance, (price).toFixed(precision)))
         } else {
             order = (await qryptos.createOrder(lp.pair, 'limit', side, balance, (price).toFixed(precision)))
@@ -111,7 +111,7 @@ async function doOrders(lp, side, op, precision, price, qryptos, balance, callba
         callback(order);
 
     } catch (err) {
-        console.error('error', err)
+        //console.error('error', err)
         //db.close();
     }
 }
@@ -618,7 +618,7 @@ function doOrders2(pairs, lp, p, qryptos, balances, orders2, total) {
 						var d2 = new Date(orders[p][o].timestamp);
 						var diff = Math.abs(d - d2);
 						var minutes = Math.floor((diff/1000)/60)
-						console.log('minutes: ' + minutes);
+						//console.log('minutes: ' + minutes);
 						if((minutes > 9)){
 							////console.log('old buy order...');
 							// //console.log('cancelling buy');
