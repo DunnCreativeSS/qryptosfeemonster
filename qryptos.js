@@ -341,19 +341,10 @@ async function dodatthing(qryptos, lpairs, pairs, balances) {
 				let orders;
                 try {
 				
-					orders = await qryptos.fetchOrders( lpairs[p].pair, 0, 100000, {status: 'closed'});
+					orders = await qryptos.fetchOrders( lpairs[p].pair, 0, 100000);
                     
 					for (var i in orders) {
-					if (orders[i].status == 'closed'){
 						
-						
-						orders5.push(orders[i]);
-						
-						//console.log(tracker);
-						counts[orders5[i].symbol] = 0;
-						//console.log(math.format(orders[i].fee.cost,{exponential:{lower:1e-100,upper:1e100}}));
-
-
 						tracker[p].fees += (-1 * orders[i].fee.cost);
 						if (orders[i].side == 'buy'){
 						tracker[p].buys = tracker[p].buys - (orders[i].amount * orders[i].price);  
@@ -365,6 +356,16 @@ async function dodatthing(qryptos, lpairs, pairs, balances) {
 						tracker[p].bidask = tracker[p].sells+ tracker[p].buys;
 						tracker[p].total = tracker[p].bidask + tracker[p].fees;
 							
+					if (orders[i].status == 'closed'){
+						
+						
+						orders5.push(orders[i]);
+						
+						//console.log(tracker);
+						counts[orders5[i].symbol] = 0;
+						//console.log(math.format(orders[i].fee.cost,{exponential:{lower:1e-100,upper:1e100}}));
+
+
 						var diff3 = Math.abs(new Date() - new Date(orders[i].timestamp));
 						hours = ((diff3/1000)/60 / 60).toFixed(8);
 						if (hours <= 1){
