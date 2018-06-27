@@ -26,7 +26,7 @@ var diff2
 var minutes
 var hours
 var percentHr
-var startDate = new Date('2018/06/26 23:59')
+var startDate = new Date('2018/06/27 03:00')
 //console.log(startDate.getTime());
 //console.log(new Date().getTime());
 //var MongoClient = require('mongodb').MongoClient;
@@ -81,7 +81,7 @@ async function doOrders(lp, side, op, precision, price, qryptos, balance, callba
 				balance = (balance / 2.05).toFixed(8);
 				}
 				else {
-									balance = balance /  (price).toFixed(precision)	
+									balance = balance /  price	
 
 				}
 			}
