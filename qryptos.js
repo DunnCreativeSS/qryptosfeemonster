@@ -605,7 +605,7 @@ function doOrders2(pairs, lp, p, qryptos, balances, orders2, total) {
                         //////console.log(lp.ob.ask.price);
 						
 								if (lp.pair == "ETH/BTC"){
-									  if (orders[p][o].side == 'sell' && orders[p][o].price != lp.ob.ask2.price) {
+									  if (orders[p][o].side == 'sell' && orders[p][o].price != lp.ob.ask.price) {
                             ////console.log('cancelling sell');
                             setTimeout(function() {
                                 cancel(orders[p][o], o, qryptos, function(data) {
@@ -614,7 +614,7 @@ function doOrders2(pairs, lp, p, qryptos, balances, orders2, total) {
                             ////console.log(lp.ob.ask.price * askrate);
                             try {
                                 setTimeout(function() {
-                                    doOrders(lp, 'sell', orders[p], lp.precision, lp.ob.ask2.price * askrate* askrate, qryptos, balances[lp.which].free, function(data) {
+                                    doOrders(lp, 'sell', orders[p], lp.precision, lp.ob.ask.price *askrate, qryptos, balances[lp.which].free, function(data) {
 
                                         //////console.log(data);
                                     });
