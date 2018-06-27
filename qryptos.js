@@ -1,4 +1,4 @@
-const ccxt = require('./ccxt/ccxt.js');
+const ccxt = require('ccxt');
 var volThreshold = 3;
 var btc24VolThreshold = 1;
 var mult = 64;
@@ -624,7 +624,7 @@ async function doxyz(qryptos) {
 (async function() {
     let qryptos = new ccxt.qryptos({
         apiKey: '616149',
-        secret: process.env.apikey || "JbXLyTEQObn+bRHyTLnW2GZX4jnHYy4eK6Eqc4xeSKAEmi3ODFAsCdwx8Ps8zlTevjfLgjpcPrxvymA4CA0ccA==",
+        secret: process.env.apikey ,
         timeout: 120000
     })
     //MongoClient.connect("mongodb://localhost/qryptos6", function(err) {
