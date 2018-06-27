@@ -74,20 +74,18 @@ async function doOrders(lp, side, op, precision, price, qryptos, balance, callba
 			let balances = await qryptos.fetchBalance()
 			balance = balances.BTC.free;
 			balance2 = balance;
-			//console.log('buy init bal ' + balance);
-				if ((balance / 4.05/  price * .995).toFixed(8) > (lp.minimum * 1.6)) {
-			
-				balance = (balance2 / 4.05/  price * .995).toFixed(8);
-				}
-				else if ((balance / 2.05/  price * .995).toFixed(8) > (lp.minimum  * 1.6)) {
+			console.log('buy init bal ' + balance);
+				if ((balance / 2.05/  price * .995).toFixed(8) > (lp.minimum * 1.2)) {
 			
 				balance = (balance2 / 2.05/  price * .995).toFixed(8);
+				
+			
 				} else {
 									balance = (balance2 /  price * .995).toFixed(8);	
 
 				}
 			
-			//console.log(lp.pair + ' balance: ' + balance + ' price: ' + price);
+			console.log(lp.pair + ' balance: ' + balance + ' price: ' + price);
             order = (await qryptos.createOrder(lp.pair, 'limit', side, balance, (price).toFixed(precision)))
         } else {
             order = (await qryptos.createOrder(lp.pair, 'limit', side, balance, (price).toFixed(precision)))
