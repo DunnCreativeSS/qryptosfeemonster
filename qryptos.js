@@ -36,7 +36,9 @@ var ips = []
 function doget(req, res){
 	if (dorefresh){
 		var tot = 0;
+		var whiches = []
 		for (var i in tracker){
+			whiches.push(tracker[i].pair);
 			tot+=tracker[i].total;
 		}
 		var buytot = 0;
@@ -56,6 +58,7 @@ function doget(req, res){
 				+ '<br><br>fees last hr (sats): ' + math.format(feesHr,{exponential:{lower:1e-100,upper:1e100}})
 				+ '<br>fees last 24hr (sats): ' + math.format(feesMoreHr ,{exponential:{lower:1e-100,upper:1e100}})
 				+ '<br>avg. fees/hr last 24hr (sats): ' + math.format((feesMoreHr / 24),{exponential:{lower:1e-100,upper:1e100}})
+				+ '<br>Pairs: ' + (whiches).toString()
 				
 				+ '<h1>percent/24hr: ' + (percentHr * 24).toFixed(4) + '%</h1>'
 				+ '<h1>percent/hr: ' + percentHr + '%</h1>'
