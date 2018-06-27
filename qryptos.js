@@ -332,7 +332,7 @@ async function dodatthing(qryptos, lpairs, pairs, balances) {
 				let orders;
                 try {
 				
-					orders = await qryptos.fetchOrders( lpairs[p].pair, 0, 1000, {status: 'closed'});
+					orders = await qryptos.fetchOrders( lpairs[p].pair, 0, 100000, {status: 'closed'});
                     
 					for (var i in orders) {
 					if (orders[i].status == 'closed'){
@@ -369,7 +369,7 @@ async function dodatthing(qryptos, lpairs, pairs, balances) {
 					}
 					
 					}
-                    orders = await qryptos.fetchOrders(lpairs[p].pair, 0, 1000, {status: 'open'});
+                    orders = await qryptos.fetchOrders(lpairs[p].pair, 0, 100000, {status: 'open'});
                     //////console.log(orders);
 					for (var i in orders) {
 						
