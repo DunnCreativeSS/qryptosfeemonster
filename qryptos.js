@@ -65,9 +65,7 @@ async function dobalances(amount, divisor, lp, callback){
 	if (amt > lp.minimum) {
 		console.log('callback amt: ' + amt);
 		callback( amt);
-	}else if ((amount / divisor * .995) < lp.minimum){
-		callback(lp.minimum)
-	} else if (divisor <= 1.099){
+	}else if (divisor <= 1.2){
 		console.log('divisor <= 2 callback bal * price');
 		callback((amount / divisor * .995));
 	} else {
