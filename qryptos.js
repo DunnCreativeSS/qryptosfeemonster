@@ -345,7 +345,6 @@ async function dodatthing(qryptos, lpairs, pairs, balances) {
 						//console.log(math.format(orders[i].fee.cost,{exponential:{lower:1e-100,upper:1e100}}));
 
 
-							if (tracker[p].pair == orders[i].symbol){
 						tracker[p].fees += (-1 * orders[i].fee.cost);
 						if (orders[i].side == 'buy'){
 						tracker[p].buys = tracker[p].buys - (orders[i].amount * orders[i].price);  
@@ -356,7 +355,7 @@ async function dodatthing(qryptos, lpairs, pairs, balances) {
 						
 						tracker[p].bidask = tracker[p].sells+ tracker[p].buys;
 						tracker[p].total = tracker[p].bidask + tracker[p].fees;
-							}
+							
 						var diff3 = Math.abs(new Date() - new Date(orders[i].timestamp));
 						hours = ((diff3/1000)/60 / 60).toFixed(8);
 						if (hours <= 1){
