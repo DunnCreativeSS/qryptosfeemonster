@@ -76,7 +76,7 @@ async function doOrders(lp, side, op, precision, price, qryptos, balance, callba
 			//	//console.log(lp.pair);
 			}
 			else if ((balance / 2.05).toFixed(8) < lp.minimum) {
-				balance = balance *  (price).toFixed(precision)
+				balance = balance /  (price).toFixed(precision)	
 			}
             balance = (balance / 4.05).toFixed(8); //12.01
 			}
