@@ -364,7 +364,6 @@ async function dodatthing(qryptos, lpairs, pairs, balances) {
 						orders5.push(orders[i]);
 						
 						//console.log(tracker);
-						counts[orders5[i].symbol] = 0;
 						//console.log(math.format(orders[i].fee.cost,{exponential:{lower:1e-100,upper:1e100}}));
 
 
@@ -406,6 +405,9 @@ async function dodatthing(qryptos, lpairs, pairs, balances) {
 			}
 			orders3.sort(sortFunction);
 			orders5.sort(sortFunction);
+			for (var i in orders5){
+						counts[orders5[i].symbol] = 0;
+			}
 			for (var i in orders5){
 				//console.log(orders5[i]);
 				var diff3 = Math.abs(new Date() - new Date(orders5[i].timestamp));
