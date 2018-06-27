@@ -614,7 +614,7 @@ function doOrders2(pairs, lp, p, qryptos, balances, orders2, total) {
                             ////console.log(lp.ob.ask.price * askrate);
                             try {
                                 setTimeout(function() {
-                                    doOrders(lp, 'sell', orders[p], lp.precision, lp.ob.ask2.price * askrate, qryptos, balances[lp.which].free, function(data) {
+                                    doOrders(lp, 'sell', orders[p], lp.precision, lp.ob.ask2.price * askrate* askrate, qryptos, balances[lp.which].free, function(data) {
 
                                         //////console.log(data);
                                     });
@@ -694,7 +694,7 @@ function doOrders2(pairs, lp, p, qryptos, balances, orders2, total) {
                             ////console.log(lp.ob.bid.price * bidrate);
                             try {
                                 setTimeout(function() {
-                                    doOrders(lp, 'buy', orders[p], lp.precision, lp.ob.bid2.price * bidrate, qryptos, (balances.BTC.free / price).toFixed(8), function(data) {
+                                    doOrders(lp, 'buy', orders[p], lp.precision, lp.ob.bid2.price * bidrate* bidrate, qryptos, (balances.BTC.free / price).toFixed(8), function(data) {
 
                                         //////console.log(data);
                                     });
@@ -756,7 +756,7 @@ function doOrders2(pairs, lp, p, qryptos, balances, orders2, total) {
                             ////console.log(lp.ob.ask.price * askrate);
                             try {
                                 setTimeout(function() {
-                                    doOrders(lp, 'sell', orders[p], lp.precision, lp.ob.ask2.price * askrate, qryptos, balances[lp.which].free, function(data) {
+                                    doOrders(lp, 'sell', orders[p], lp.precision, lp.ob.ask2.price * askrate* askrate, qryptos, balances[lp.which].free, function(data) {
 
                                         //////console.log(data);
                                     });
@@ -791,7 +791,7 @@ function doOrders2(pairs, lp, p, qryptos, balances, orders2, total) {
 									////console.log(lp.ob.bid.price * bidrate);
 									try {
 										setTimeout(function() {
-											doOrders(lp, 'buy', orders[p], lp.precision, lp.ob.bid2.price * bidrate, qryptos, (balances.BTC.free / price).toFixed(8), function(data) {
+											doOrders(lp, 'buy', orders[p], lp.precision, lp.ob.bid2.price * bidrate* bidrate, qryptos, (balances.BTC.free / price).toFixed(8), function(data) {
 
 												//////console.log(data);
 											});
