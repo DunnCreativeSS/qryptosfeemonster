@@ -329,7 +329,7 @@ async function dodatthing(qryptos, lpairs, pairs, balances) {
 						
 						orders5.push(orders[i]);
 						
-						counts[orders5[i].currency_pair_code] = 0;
+						counts[orders5[i].info.currency_pair_code] = 0;
 						//console.log(math.format(orders[i].fee.cost,{exponential:{lower:1e-100,upper:1e100}}));
 
 
@@ -372,14 +372,15 @@ async function dodatthing(qryptos, lpairs, pairs, balances) {
 			orders3.sort(sortFunction);
 			orders5.sort(sortFunction);
 			for (var i in orders5){
+				console.log(orders5[i]);
 				var diff3 = Math.abs(new Date() - new Date(orders5[i].timestamp));
 				hours = ((diff3/1000)/60 / 60).toFixed(8);
 				if (hours <= 1){
-					counts[orders5[i].currency_pair_code]++;
+					counts[orders5[i].info.currency_pair_code]++;
 				}
-				if (counts[orders5[i].currency_pair_code] >= 3){
-					var string = orders5[i].currency_pair_code.substr(orders5[i].currency_pair_code.length - 3);
-					var string2 = orders5[i].currency_pair_code.substr(0, orders5[i].currency_pair_code.indexOf(string)); 
+				if (counts[orders5[i].info.currency_pair_code] >= 3){
+					var string = orders5[i].info.currency_pair_code.substr(orders5[i].info.currency_pair_code.length - 3);
+					var string2 = orders5[i].info.currency_pair_code.substr(0, orders5[i].info.currency_pair_code.indexOf(string)); 
 
 					sList.push(string2 + '/' + string);
 				}
