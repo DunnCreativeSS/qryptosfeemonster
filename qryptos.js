@@ -392,6 +392,8 @@ async function dodatthing(qryptos, lpairs, pairs, balances) {
 			}
 			console.log(sList);
 					////console.log('btc: ' +( balances.BTC.free + btc) );
+					console.log('btc');
+					console.log(balances.BTC);
 					btc = (balances.BTC.free + btc).toFixed(8);
 					percent =  (100 * (-1 * (1 - (btc / startBtc)))).toFixed(4);
 					diff2 = Math.abs(new Date() - startDate);
