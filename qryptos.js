@@ -921,10 +921,10 @@ function doOrders2(pairs, lp, p, qryptos, balances, orders2, total) {
                         }
 								}
                     }
-					console.log(gobuy[lpairs[p].pair]);
-                    if (bought <= 0 && sold <= 1 && gobuy[lpairs[p].pair] == true) {
+					console.log(gobuy[lp.pair]);
+                    if (bought <= 0 && sold <= 1 && gobuy[lp.pair] == true) {
 						console.log('buy!')
-						gobuy[lpairs[p].pair] = false;
+						gobuy[lp.pair] = false;
 								if (sList.includes(lp.pair)){
 									price = lp.ob.bid2.price * bidrate;
 									if ((balances.BTC.free / price > lp.minimum && balances[lp.which].free <= lp.minimum)) { // && (balances[lp.which].free <= lp.minimum)){//hardwire btc/eth
