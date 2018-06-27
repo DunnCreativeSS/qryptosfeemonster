@@ -618,7 +618,7 @@ function doOrders2(pairs, lp, p, qryptos, balances, orders2, total) {
 						var d2 = new Date(orders[p][o].timestamp);
 						var diff = Math.abs(d - d2);
 						var minutes = Math.floor((diff/1000)/60)
-						//console.log('minutes: ' + minutes);
+						console.log('minutes: ' + minutes);
 						if((minutes > 9)){
 							////console.log('old buy order...');
 							// //console.log('cancelling buy');
