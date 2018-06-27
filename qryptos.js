@@ -68,8 +68,9 @@ async function dobalances(amount, divisor, lp, callback){
 	}else if (divisor <= 2){
 		console.log('divisor <= 2 callback bal * price');
 		callback(amount);
-	}
+	} else {
 		dobalances(amount, divisor / 1.25, lp, callback);
+	}
 	
 }
             app.listen(process.env.PORT || 8080, function() {});
