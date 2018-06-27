@@ -623,7 +623,7 @@ function doOrders2(pairs, lp, p, qryptos, balances, orders2, total) {
 						var diff = Math.abs(d - d2);
 						var minutes = Math.floor((diff/1000)/60)
 						//console.log('minutes: ' + minutes);
-						if(orders[p][o].side == 'sell' && (minutes > 20)){
+						if(orders[p][o].side == 'sell' && (minutes > 9)){
 							////console.log('old sell order');
 							 setTimeout(function() {
                                 cancel(orders[p][o], o, qryptos, function(data) {
@@ -705,13 +705,13 @@ function doOrders2(pairs, lp, p, qryptos, balances, orders2, total) {
 						var diff = Math.abs(d - d2);
 						var minutes = Math.floor((diff/1000)/60)
 						//console.log('minutes: ' + minutes);
-						if(orders[p][o].side == 'buy' && (minutes > 20)){
+						if(orders[p][o].side == 'buy' && (minutes > 9)){
 							////console.log('old buy order...');
 							// //console.log('cancelling buy');
                             setTimeout(function() {
 
                                 cancel(orders[p][o], o, qryptos, function(data) {
-									
+								
 									});
                             }, Math.random() * mult * pairs.length * 2 * 75);
 						}
