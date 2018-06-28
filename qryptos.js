@@ -14,13 +14,15 @@ var hrCount = 0;
 var moreHrCount = 0;
 var math = require("mathjs");
 const express = require('express');
-const app = express();
+var favicon = require('serve-favicon')
+var path = require('path')
+ 
+var app = express()
+app.use(favicon(path.join(__dirname, 'public', 'favicon.png')))
+
 var dorefresh = false;
 var request = require("request")
 var bodyParser = require('body-parser')
-
-const favicon = require('express-favicon');
-app.use(favicon('./public/favicon.png'));
 
 app.use(bodyParser.json()); // to support JSON-encoded bodies
 var sList = []
