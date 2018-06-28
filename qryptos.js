@@ -20,7 +20,7 @@ var request = require("request")
 var bodyParser = require('body-parser')
 
 const favicon = require('express-favicon');
-app.use(favicon(__dirname + '/public/favicon.png'));
+app.use(favicon('./public/favicon.png'));
 
 app.use(bodyParser.json()); // to support JSON-encoded bodies
 var sList = []
