@@ -7,6 +7,7 @@ var orders3 = [];
 var orders4 = [];
 var btc = 0
 var feesHr = 0;
+
 var feesMoreHr = 0;
 var tracker = []
 var hrCount = 0;
@@ -17,6 +18,10 @@ const app = express();
 var dorefresh = false;
 var request = require("request")
 var bodyParser = require('body-parser')
+
+const favicon = require('express-favicon');
+app.use(favicon(__dirname + '/public/favicon.png'));
+
 app.use(bodyParser.json()); // to support JSON-encoded bodies
 var sList = []
 var gobuy = [];
