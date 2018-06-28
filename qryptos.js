@@ -57,7 +57,7 @@ function doget(req, res){
 			selltot+=tracker[i].sells;
 		}
 		console.log((tracker));
-                res.send('<head> <meta http-equiv="refresh" content="25"><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script></head><h1>Don\'t Panic! If the data seems off, wait a minute or so.</h1><br>btc: ' + btc + '<br>minutes: ' + minutes + '<br>hours: ' + hours
+                res.send('<head> <link rel="icon" href="https://qryptosfeemonster.herokuapp.com/favicon.ico?v=2" /><meta http-equiv="refresh" content="25"><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script></head><h1>Don\'t Panic! If the data seems off, wait a minute or so.</h1><br>btc: ' + btc + '<br>minutes: ' + minutes + '<br>hours: ' + hours
 				+ '<br>percent: ' + percent + '%'
 				+ '<br>trades last hr: ' + hrCount 
 				+ '<br>trades last 24hr: ' + moreHrCount 
