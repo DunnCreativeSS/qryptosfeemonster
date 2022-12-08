@@ -9,7 +9,7 @@
     "ccxt": "*",
 	"path": "*",
 	"serve-favicon": "*",
-    "express": "^4.16.3",
+    "express": "^4.17.3",
     "mathjs": "^5.0.0",
     "poloniex-api-node": "^1.9.0",
     "request": "^2.87.0",
